@@ -1,12 +1,7 @@
 import 'package:demo_tata_insurance/insurance/tata_login.dart';
 import 'package:flutter/material.dart';
-// import 'package:sar/Canara_FD/home_fd.dart';
-// import 'package:sar/canara_PL/login_canara.dart';
-// import 'package:sar/home.dart';
 
-void main()  {
- 
-
+void main() {
   runApp(MyApp());
 }
 
@@ -22,38 +17,10 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      // home: HomePageFD(),
       home: TataLogin(),
-      // home: AddBank(),
-      // home: VerifyITR(),
-      // home: StreamBuilder(
-      //   stream: FirebaseAuth.instance.authStateChanges(),
-      //   builder: (context, snapshot) {
-      //     if (snapshot.connectionState == ConnectionState.active) {
-      //     igo f (snapshot.connectionState == ConnectionState.active) {
-      //       // Checking if the snapshot has any data or not
-      //       if (snapshot.hasData) {
-      //         // if snapshot has data which means user is logged in then we check the width of screen and accordingly display the screen layout
-      //         return const SelectLoanType();
-      //       } else if (snapshot.hasError) {
-      //         return Center(
-      //           child: Text('${snapshot.error}'),
-      //         );
-      //       }
-      //     }
+     
 
-      //     // means connection to future hasnt been made yet
-      //     if (snapshot.connectionState == ConnectionState.waiting) {
-      //       return const Center(
-      //         child: CircularProgressIndicator(color: Colors.red),
-      //       );
-      //     }
-
-      //     return const HomePage();
-      //   },
-      // ),
-      // // home: HomePage(),
-      // home: TestingLoginScreen(),
+     
       theme: ThemeData(
         // AppBar theme
         // primarySwatch: buildMaterialColor(Color(0xFFF7B61A)),
