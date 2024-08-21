@@ -20,16 +20,17 @@ class _OTPValidationState extends State<OTPValidation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade300,
       appBar: AppBar(
-        title: const Text("tata logo"),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.blue),
-          onPressed: () => Navigator.of(context).pop(),
+        title: Image.asset(
+          'assets/tata-logo.png',
+          width: 100,
+          height: 60,
         ),
-        // actions: <Widget>[
-        //   Icon(Icons.question_mark_rounded),
-        //   SizedBox(width: 15)
-        // ],
+        actions: const <Widget>[
+          Icon(Icons.question_mark_rounded),
+          SizedBox(width: 15),
+        ],
       ),
       body: Stack(children: <Widget>[
         Container(
@@ -81,7 +82,7 @@ class _OTPValidationState extends State<OTPValidation> {
                       OTPTextField(
                           obscureText: true,
                           controller: otpController,
-                          length: 4,
+                          length: 6,
                           width: MediaQuery.of(context).size.width,
                           textFieldAlignment: MainAxisAlignment.spaceEvenly,
                           fieldWidth: 45,
