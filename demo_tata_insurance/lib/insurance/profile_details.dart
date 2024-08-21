@@ -1,3 +1,4 @@
+import 'package:demo_tata_insurance/insurance/self.dart';
 import 'package:flutter/material.dart';
 
 bool isChecked = false;
@@ -113,7 +114,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                           autofocus: false,
                           // initialValue: "2,50,000cccc",
                           decoration: const InputDecoration(
-                            labelText: "Enter current Pincode",
+                            labelText: "Enter Pincode",
                             labelStyle: TextStyle(color: Colors.grey),
                             border: OutlineInputBorder(),
                             filled: true, //<-- SEE HERE
@@ -121,18 +122,6 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        TextButton(
-                            onPressed: () {
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //       builder: (context) => SignInOptions(),
-                              //     ));
-                            },
-                            child: const Text(
-                              "click here",
-                              style: TextStyle(color: Colors.blue),
-                            )),
                         Row(
                           children: [
                             Checkbox(
@@ -145,7 +134,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                             ),
                             const SizedBox(width: 10),
                             const Text(
-                              "I authorize the Bank and its represemtatives to call, SMS or communicate vi",
+                              "I authorize the Bank and its represemtatives to Call, SMS\nor communicate via WhatsApp regarding my application.\n Read More",
                               style: TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400,
@@ -162,12 +151,12 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                                 //     ? null
                                 //     :
                                 ? () {
-                                    // Navigator.push(
-                                    //   context,
-                                    //   MaterialPageRoute(
-                                    //     builder: (context) => Employment(),
-                                    //   ),
-                                    // );
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => SelfSelection(),
+                                      ),
+                                    );
                                   }
                                 : null,
                             child: const Text("Next"),
