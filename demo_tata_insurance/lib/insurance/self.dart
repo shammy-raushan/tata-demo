@@ -20,15 +20,15 @@ class _SelfSelectionState extends State<SelfSelection> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("tata logo"),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.blue),
-          onPressed: () => Navigator.of(context).pop(),
+        title: Image.asset(
+          'assets/tata-logo.png',
+          width: 100,
+          height: 60,
         ),
-        // actions: <Widget>[
-        //   Icon(Icons.question_mark_rounded),
-        //   SizedBox(width: 15)
-        // ],
+        actions: const <Widget>[
+          Icon(Icons.question_mark_rounded),
+          SizedBox(width: 15),
+        ],
       ),
       body: Stack(children: <Widget>[
         Container(
@@ -49,7 +49,7 @@ class _SelfSelectionState extends State<SelfSelection> {
               const StepProgressIndicator(
                 totalSteps: 4,
                 currentStep: 1,
-                selectedColor: Colors.red,
+                selectedColor: Colors.blue,
               ),
               const SizedBox(height: 40),
               const Text(

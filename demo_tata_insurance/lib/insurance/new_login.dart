@@ -22,8 +22,8 @@ class _NewTataLoginState extends State<NewTataLogin> {
       backgroundColor: Colors.grey.shade300,
       appBar: AppBar(
         title: Image.asset(
-          // 'assets/tata_logo.png',
-                    'assets/bg.png',
+          'assets/tata-logo.png',
+                    
 
           width: 100,
           height: 60,
@@ -46,7 +46,7 @@ class _NewTataLoginState extends State<NewTataLogin> {
         ),
        
         Padding(
-          padding: const EdgeInsets.fromLTRB(20, 170, 20, 100),
+          padding: const EdgeInsets.fromLTRB(20, 170, 20, 20),
           child: Center(
             child: PhysicalModel(
               color: Colors.grey.shade100,
@@ -118,7 +118,7 @@ class _NewTataLoginState extends State<NewTataLogin> {
                         child: Row(
                           children: [
                             Image.asset(
-                              'assets/bg.png',
+                              'assets/profile.png',
                               width: 55,
                               height: 20,
                             ),
