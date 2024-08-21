@@ -1,3 +1,5 @@
+import 'package:demo_tata_insurance/insurance/selection.dart';
+import 'package:demo_tata_insurance/insurance/term_selection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
@@ -33,7 +35,7 @@ class _SelfSelectionState extends State<SelfSelection> {
           width: double.infinity,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("assets/bank.png"),
+              image: AssetImage("assets/bg.png"),
               fit: BoxFit.cover,
             ),
           ),
@@ -47,16 +49,17 @@ class _SelfSelectionState extends State<SelfSelection> {
               const StepProgressIndicator(
                 totalSteps: 4,
                 currentStep: 1,
-                selectedColor: Color(0xFF13a8e1),
+                selectedColor: Colors.red,
               ),
+              const SizedBox(height: 40),
               const Text(
                 "Who all do you want to insure",
                 style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w600,
-                ),
+                    fontSize: 24,
+                    fontWeight: FontWeight.w800,
+                    color: Colors.grey),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 40),
               GestureDetector(
                 onTap: () {
                   setState(() {
@@ -77,22 +80,20 @@ class _SelfSelectionState extends State<SelfSelection> {
                             side:
                                 new BorderSide(color: Colors.white, width: 2.0),
                             borderRadius: BorderRadius.circular(4.0)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Column(
+                    child:const Padding(
+                      padding:  EdgeInsets.fromLTRB(20, 20, 20, 60),
+                      child: Row(
                         children: [
-                          Text("IMG"),
-                          // Image.asset(
-                          //   'assets/customer.png',
-                          //   height: 130,
-                          //   width: 130,
-                          // ),
-                          const SizedBox(height: 10),
-                          const Text(
+                          Padding(
+                            padding:  EdgeInsets.only(right: 40.0),
+                            child: Icon(Icons.person_3_outlined),
+                          ),
+                           Text(
                             "Self",
                             style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
+                              fontSize: 24,
+                              fontWeight: FontWeight.w800,
+                              color: Colors.grey
                             ),
                           ),
                         ],
@@ -101,7 +102,7 @@ class _SelfSelectionState extends State<SelfSelection> {
                   ),
                 ),
               ),
-              // const SizedBox(width: 10),
+              const SizedBox(height: 40),
               GestureDetector(
                 onTap: () {
                   setState(() {
@@ -121,16 +122,19 @@ class _SelfSelectionState extends State<SelfSelection> {
                                 new BorderSide(color: Colors.white, width: 2.0),
                             borderRadius: BorderRadius.circular(4.0)),
                     child: const Padding(
-                      padding: EdgeInsets.all(4.0),
-                      child: Column(
+                      padding: EdgeInsets.fromLTRB(20, 20, 20, 60),
+                      child: Row(
                         children: [
-                          Text("IMG"),
-                          //  SizedBox(height: 10),
+                          Padding(
+                            padding: EdgeInsets.only(right: 40.0),
+                            child: Icon(Icons.person_2_outlined),
+                          ),
                           Text(
                             "Family",
                             style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
+                              fontSize: 24,
+                              fontWeight: FontWeight.w800,
+                              color: Colors.grey
                             ),
                           ),
                         ],
@@ -140,10 +144,17 @@ class _SelfSelectionState extends State<SelfSelection> {
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 160,
               ),
-              Container(width: double.infinity,
-                child: ElevatedButton(onPressed: () {}, child: Text("Proceed")))
+              Container(
+                  width: double.infinity,
+                  child:
+                      ElevatedButton(onPressed: () { 
+                        Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => TermSelection(),
+                                ));}, child: Text("Proceed")))
             ],
           ),
         ),

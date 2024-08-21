@@ -134,7 +134,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                             ),
                             const SizedBox(width: 10),
                             const Text(
-                              "I authorize the Bank and its represemtatives to Call, SMS\nor communicate via WhatsApp regarding my application.\n Read More",
+                              "I authorize the Bank and its represemtatives\n to Call, SMS or communicate via WhatsApp\n regarding my application.\n Read More",
                               style: TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400,

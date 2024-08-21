@@ -1,4 +1,6 @@
+import 'package:demo_tata_insurance/insurance/new_login.dart';
 import 'package:demo_tata_insurance/insurance/tata_login.dart';
+import 'package:demo_tata_insurance/insurance/term_selection.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -17,7 +19,9 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: TataLogin(),
+      // home: TataLogin(),
+      // home: TermSelection(),
+      home: NewTataLogin(),
      
 
      

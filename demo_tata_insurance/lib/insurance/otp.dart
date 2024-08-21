@@ -36,7 +36,7 @@ class _OTPValidationState extends State<OTPValidation> {
           width: double.infinity,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("assets/bank.png"),
+              image: AssetImage("assets/bg.png"),
               fit: BoxFit.cover,
             ),
           ),
