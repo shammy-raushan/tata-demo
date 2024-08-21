@@ -1,57 +1,56 @@
+
 import 'package:demo_tata_insurance/insurance/otp.dart';
-import 'package:demo_tata_insurance/insurance/profile_details.dart';
 import 'package:flutter/material.dart';
 
 bool isChecked = false;
 
-class TataLogin extends StatefulWidget {
-  const TataLogin({super.key});
+class NewTataLogin extends StatefulWidget {
+  const NewTataLogin({super.key});
 
   @override
-  State<TataLogin> createState() => _TataLoginState();
+  State<NewTataLogin> createState() => _NewTataLoginState();
 }
 
-class _TataLoginState extends State<TataLogin> {
+class _NewTataLoginState extends State<NewTataLogin> {
   bool? check1 = false;
   bool? check2 = false;
-  bool _value = true;
+  bool _value = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade300,
       appBar: AppBar(
-        title: const Text("tata logo"),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.blue),
-          onPressed: () => Navigator.of(context).pop(),
+        title: Image.asset(
+          // 'assets/tata_logo.png',
+                    'assets/bg.png',
+
+          width: 100,
+          height: 60,
         ),
-        // actions: <Widget>[
-        //   Icon(Icons.question_mark_rounded),
-        //   SizedBox(width: 15)
-        // ],
+        actions: const <Widget>[
+          Icon(Icons.question_mark_rounded),
+          SizedBox(width: 15),
+        ],
       ),
       body: Stack(children: <Widget>[
         Container(
           width: double.infinity,
-          decoration: BoxDecoration(
+          height: 500,
+          decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage("assets/bg.png"),
               fit: BoxFit.cover,
             ),
           ),
-
-          //
         ),
-        new Center(
-          child: new Text("Hello background"),
-        ),
+       
         Padding(
-          padding: const EdgeInsets.fromLTRB(20, 220, 20, 20),
+          padding: const EdgeInsets.fromLTRB(20, 170, 20, 100),
           child: Center(
             child: PhysicalModel(
-              color: Colors.white,
+              color: Colors.grey.shade100,
               elevation: 8,
-              // shadowColor: Colors.blue,
               borderRadius: BorderRadius.circular(20),
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
@@ -83,9 +82,12 @@ class _TataLoginState extends State<TataLogin> {
                         decoration: const InputDecoration(
                           labelText: "Enter your mobile number",
                           labelStyle: TextStyle(color: Colors.grey),
-                          border: OutlineInputBorder(),
+                          border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(4.0)),
+                          ),
                           filled: true, //<-- SEE HERE
-                          fillColor: Colors.white,
+                          fillColor: Color.fromARGB(255, 247, 246, 246),
                         ),
                       ),
                       const SizedBox(height: 20),
@@ -97,22 +99,46 @@ class _TataLoginState extends State<TataLogin> {
                           labelStyle: TextStyle(color: Colors.grey),
                           border: OutlineInputBorder(),
                           filled: true, //<-- SEE HERE
-                          fillColor: Colors.white,
+                          fillColor: Color.fromARGB(255, 247, 246, 246),
                         ),
                       ),
                       const SizedBox(height: 20),
-                      TextButton(
-                          onPressed: () {
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //       builder: (context) => ProfileDetails(),
-                            //     ));
-                          },
-                          child: const Text(
-                            "click here",
-                            style: TextStyle(color: Colors.blue),
-                          )),
+                  
+
+                      Container(
+                        height: 50,
+                        margin: const EdgeInsets.only(left: 20, right: 20),
+                        decoration: BoxDecoration(
+                          color: Colors.blue.withOpacity(0.1),
+                          border: Border.all(
+                            color: Colors.blueAccent,
+                          ),
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        child: Row(
+                          children: [
+                            Image.asset(
+                              'assets/bg.png',
+                              width: 55,
+                              height: 20,
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.only(left: 10),
+                              child: Text(
+                                "Don't have PAN handy? No problem,\n just click here to get a quick quote!",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Color.fromARGB(255, 128, 128, 128),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+
                       Row(
                         children: [
                           Checkbox(
@@ -123,18 +149,19 @@ class _TataLoginState extends State<TataLogin> {
                               });
                             },
                           ),
-                          const SizedBox(width: 10),
+                          const SizedBox(width: 1),
                           const Text(
-                            "we will check your cibil by principle",
+                            "We will check your cibil by principle",
                             style: TextStyle(
-                              fontSize: 12,
+                              fontSize: 13,
                               fontWeight: FontWeight.w400,
                             ),
                           ),
                         ],
                       ),
                       const SizedBox(height: 20),
-                      Container(
+
+                    Container(
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: _value == true
@@ -152,13 +179,9 @@ class _TataLoginState extends State<TataLogin> {
                               : null,
                           child: const Text("Next"),
                         ),
-                        //                 ),
-                        //               ],
-                        //             ),
-                        //           ),
-                        //         ),
+                       
                       ),
-                    ],
+                     ],
                   ),
                 ),
               ),
@@ -166,8 +189,12 @@ class _TataLoginState extends State<TataLogin> {
           ),
         ),
       ]
+        
+        
+          
+          
          
-         
+          
          
           
          
