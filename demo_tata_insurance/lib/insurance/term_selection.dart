@@ -479,33 +479,34 @@ class _TermSelectionState extends State<TermSelection> {
                     ),
                   ),
                 ),
-                Container(
-                  height: 50,
-                  margin: const EdgeInsets.only(top: 20),
-                  decoration: BoxDecoration(
-                    color: Colors.blue.withOpacity(0.1),
-                    border: Border.all(
-                      color: Colors.blueAccent,
-                    ),
-                    borderRadius: BorderRadius.circular(12.0),
-                  ),
-                  child: Row(
-                    children: [
-                      Image.asset(
-                        'assets/profile.png',
-                        width: 55,
-                        height: 20,
-                      ),
-                      Text(
-                        "Unsure about the cover amount to choose?",
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Color.fromARGB(255, 128, 128, 128),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                // Container(
+                //   height: 50,
+                //   margin: const EdgeInsets.only(top: 20),
+                //   decoration: BoxDecoration(
+                //     color: Colors.blue.withOpacity(0.1),
+                //     border: Border.all(
+                //       color: Colors.blueAccent,
+                //     ),
+                //     borderRadius: BorderRadius.circular(12.0),
+                //   ),
+                //   child: Row(
+                //     children: [
+                //       Image.asset(
+                //         'assets/profile.png',
+                //         width: 55,
+                //         height: 20,
+                //       ),
+                //       Text(
+                //         "Unsure about the cover amount to choose?",
+                //         style: TextStyle(
+                //           fontSize: 12,
+                //           color: Color.fromARGB(255, 128, 128, 128),
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
+             
               ],
             ),
           ),

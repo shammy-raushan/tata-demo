@@ -46,7 +46,7 @@ class _NewTataLoginState extends State<NewTataLogin> {
         ),
        
         Padding(
-          padding: const EdgeInsets.fromLTRB(20, 170, 20, 20),
+          padding: const EdgeInsets.fromLTRB(20, 140, 20, 20),
           child: Center(
             child: PhysicalModel(
               color: Colors.grey.shade100,
@@ -56,7 +56,7 @@ class _NewTataLoginState extends State<NewTataLogin> {
                 padding: const EdgeInsets.all(20.0),
                 child: Container(
                   width: double.infinity,
-                  // height: 100,
+                  height: 480,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -75,7 +75,7 @@ class _NewTataLoginState extends State<NewTataLogin> {
                             fontWeight: FontWeight.w400,
                             color: Colors.grey),
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 10),
                       TextFormField(
                         autofocus: false,
                         // initialValue: "2,50,000cccc",
@@ -107,7 +107,6 @@ class _NewTataLoginState extends State<NewTataLogin> {
 
                       Container(
                         height: 50,
-                        margin: const EdgeInsets.only(left: 20, right: 20),
                         decoration: BoxDecoration(
                           color: Colors.blue.withOpacity(0.1),
                           border: Border.all(
@@ -136,7 +135,7 @@ class _NewTataLoginState extends State<NewTataLogin> {
                         ),
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 8,
                       ),
 
                       Row(
@@ -159,11 +158,19 @@ class _NewTataLoginState extends State<NewTataLogin> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 8),
 
-                    Container(
-                        width: double.infinity,
+
+
+
+
+
+
+                     Container(
+                      
+                        
                         child: ElevatedButton(
+                          
                           onPressed: _value == true
                               // check1 == false || check2 == false
                               //     ? null
@@ -177,7 +184,8 @@ class _NewTataLoginState extends State<NewTataLogin> {
                                   );
                                 }
                               : null,
-                          child: const Text("Next"),
+                          child: const Text("Next",
+                          ),
                         ),
                        
                       ),
