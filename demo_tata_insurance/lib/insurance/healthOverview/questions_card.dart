@@ -17,10 +17,10 @@ class _QuestionsCardState extends State<QuestionsCard> {
   String _selectedOption = 'No';
   List<int> _selectedDisease = [];
   List<int> _selectedMedicaHistory = [];
-  List<String> _selectedSubstance = [];
+  Map<String, String?> _selectedSubstance = {};
 
   Future<void> _showGridBottomSheet(BuildContext context) async {
-    final selectedItems = await showModalBottomSheet<List<int>>(
+    final selectedItems = await showModalBottomSheet<dynamic>(
       backgroundColor: Colors.white,
       context: context,
       isScrollControlled: true,
@@ -51,19 +51,27 @@ class _QuestionsCardState extends State<QuestionsCard> {
                 _selectedSubstance = selected;
               });
             },
+            selectedOptions: _selectedSubstance,
           );
         return SizedBox();
       },
     );
-
     if (selectedItems != null) {
-      setState(() {
-        _selectedDisease = selectedItems;
-      });
-    } else {
-      setState(() {
-        _selectedOption = 'No';
-      });
+      if (widget.index == 0) {
+        setState(() {
+          _selectedDisease = selectedItems;
+        });
+      }
+      if (widget.index == 1) {
+        setState(() {
+          _selectedMedicaHistory = selectedItems;
+        });
+      }
+      if (widget.index == 3) {
+        setState(() {
+          _selectedSubstance = selectedItems;
+        });
+      }
     }
   }
 
@@ -73,6 +81,13 @@ class _QuestionsCardState extends State<QuestionsCard> {
     });
     if (option == 'Yes' && widget.index != 2) {
       _showGridBottomSheet(context);
+    }
+    if (_selectedOption == 'No') {
+      setState(() {
+        if (widget.index == 0) _selectedDisease = [];
+        if (widget.index == 1) _selectedMedicaHistory = [];
+        if (widget.index == 3) _selectedSubstance = {};
+      });
     }
   }
 
@@ -86,7 +101,18 @@ class _QuestionsCardState extends State<QuestionsCard> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CircularCard(imageUrl: ''),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CircularCard(imageUrl: ''),
+                if (widget.index == 0 && _selectedDisease.isNotEmpty)
+                  _getEditIcon(),
+                if (widget.index == 1 && _selectedMedicaHistory.isNotEmpty)
+                  _getEditIcon(),
+                if (widget.index == 3 && _selectedSubstance.isNotEmpty)
+                  _getEditIcon(),
+              ],
+            ),
             Text(widget.data['ques'],
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
             SizedBox(height: 4),
@@ -121,25 +147,48 @@ class _QuestionsCardState extends State<QuestionsCard> {
         return Wrap(
           spacing: 8.0,
           children: _selectedDisease.map((index) {
-            return Chip(
-              label: Text(disease[index]['disease']),
-            );
+            return CustomChip(text: disease[index]['disease']);
           }).toList(),
         );
       }
     } else if (widget.index == 1) {
-      if (_selectedDisease.isNotEmpty) {
+      if (_selectedMedicaHistory.isNotEmpty) {
         return Wrap(
           spacing: 8.0,
-          children: _selectedDisease.map((index) {
-            return Chip(
-              label: Text(disease[index]['disease']),
-            );
+          children: _selectedMedicaHistory.map((index) {
+            return CustomChip(text: medicalHistory[index]);
+          }).toList(),
+        );
+      }
+    } else if (widget.index == 3) {
+      if (_selectedSubstance.isNotEmpty) {
+        return Wrap(
+          spacing: 8.0,
+          children: _selectedSubstance.entries.map((entry) {
+            return CustomChip(text: '${entry.key}');
           }).toList(),
         );
       }
     }
     return Text(widget.data['ans'], style: TextStyle(fontSize: 14));
+  }
+
+  Widget _getEditIcon() {
+    return GestureDetector(
+        onTap: () {
+          _showGridBottomSheet(context);
+        },
+        child: Row(
+          children: [
+            Icon(
+              Icons.edit,
+              size: 22,
+              color: Colors.blue.shade900,
+            ),
+            SizedBox(width: 4),
+            Text("Edit", style: TextStyle(color: Colors.blue.shade900)),
+          ],
+        ));
   }
 }
 
@@ -182,6 +231,32 @@ class CircularCard extends StatelessWidget {
                 color: Colors.blue.shade900, // Icon color
               ),
             ),
+    );
+  }
+}
+
+class CustomChip extends StatelessWidget {
+  final String text;
+  const CustomChip({super.key, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8.0),
+        color: Colors.blue.withOpacity(0.1),
+      ),
+      padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 5.0),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(text.replaceAll('\n', ''),
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 10.0,
+              )),
+        ],
+      ),
     );
   }
 }

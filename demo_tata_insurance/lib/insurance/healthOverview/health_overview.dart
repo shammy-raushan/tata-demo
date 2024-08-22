@@ -1,4 +1,5 @@
 import 'package:demo_tata_insurance/insurance/healthOverview/questions_card.dart';
+import 'package:demo_tata_insurance/insurance/nominee.dart';
 import 'package:flutter/material.dart';
 
 // import '../components/health_overview/questions_card.dart';
@@ -51,7 +52,14 @@ class _HealthOverviewState extends State<HealthOverview> {
                 ),
                 SizedBox(height: 40),
                 GradientButton(
-                  onPressed: () {},
+                  onPressed: () {
+                     Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => NomineeDetails(),
+                      ),
+                    );
+                  },
                   text: 'Continue',
                 ),
               ],

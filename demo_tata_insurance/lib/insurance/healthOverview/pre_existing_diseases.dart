@@ -296,18 +296,24 @@ class _MedicalHistorySheetState extends State<MedicalHistorySheet> {
 }
 
 class SubstanceSheet extends StatefulWidget {
-  final ValueChanged<List<String>> onSelectionChanged;
-  const SubstanceSheet({super.key, required this.onSelectionChanged});
+  final dynamic onSelectionChanged;
+  final Map<String, String?> selectedOptions;
+  const SubstanceSheet(
+      {super.key,
+      required this.onSelectionChanged,
+      required this.selectedOptions});
 
   @override
   State<SubstanceSheet> createState() => _SubstanceSheetState();
 }
 
 class _SubstanceSheetState extends State<SubstanceSheet> {
-  Set<int> _selectedIndices = {};
-  final Map<String, String?> _selectedOptions = {};
-  void _handleSelectionChanged(List<String> selectedItems) {
-    // Handle the selection change here
+  Map<String, String?> _selectedOptions = {};
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedOptions = widget.selectedOptions;
   }
 
   @override
@@ -343,7 +349,6 @@ class _SubstanceSheetState extends State<SubstanceSheet> {
               physics: NeverScrollableScrollPhysics(),
               itemCount: substance.length,
               itemBuilder: (context, index) {
-                final isSelected = _selectedIndices.contains(index);
                 final category = substance[index];
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -416,7 +421,7 @@ class _SubstanceSheetState extends State<SubstanceSheet> {
             SizedBox(height: 20),
             GradientButton(
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.pop(context, _selectedOptions);
               },
               text: 'Apply',
             ),
