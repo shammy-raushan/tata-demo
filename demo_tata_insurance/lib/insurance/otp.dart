@@ -44,11 +44,9 @@ class _OTPValidationState extends State<OTPValidation> {
 
           //
         ),
-        new Center(
-          child: new Text("Hello background"),
-        ),
+        
         Padding(
-          padding: const EdgeInsets.fromLTRB(20, 220, 20, 20),
+          padding: const EdgeInsets.fromLTRB(20, 140, 20, 20),
           child: Center(
             child: PhysicalModel(
               color: Colors.white,
@@ -59,7 +57,7 @@ class _OTPValidationState extends State<OTPValidation> {
                 padding: const EdgeInsets.all(20.0),
                 child: Container(
                   width: double.infinity,
-                  // height: 100,
+                  height: 480,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -108,7 +106,7 @@ class _OTPValidationState extends State<OTPValidation> {
                             "Resend OTP",
                             style: TextStyle(color: Colors.blue),
                           )),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 130),
                       Container(
                         width: double.infinity,
                         child: ElevatedButton(

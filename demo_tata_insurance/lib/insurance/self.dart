@@ -144,7 +144,7 @@ class _SelfSelectionState extends State<SelfSelection> {
                 ),
               ),
               const SizedBox(
-                height: 160,
+                height: 120,
               ),
               Container(
                   width: double.infinity,

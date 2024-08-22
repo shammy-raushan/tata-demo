@@ -1,8 +1,9 @@
-import 'package:demo_tata_insurance/insurance/questions_card.dart';
+import 'package:demo_tata_insurance/insurance/healthOverview/questions_card.dart';
 import 'package:flutter/material.dart';
 
 // import '../components/health_overview/questions_card.dart';
 import 'sample_values.dart';
+import 'submit_button.dart';
 
 class HealthOverview extends StatefulWidget {
   const HealthOverview({super.key});
@@ -39,55 +40,23 @@ class _HealthOverviewState extends State<HealthOverview> {
                         TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
                 SizedBox(height: 10),
                 Column(
-                  children: health_overview_ques.map((question) {
+                  children: health_overview_ques.asMap().entries.map((entry) {
+                    int index = entry.key;
+                    var question = entry.value;
                     return QuestionsCard(
                       data: question,
+                      index: index,
                     );
                   }).toList(),
                 ),
-                SizedBox(height: 16),
+                SizedBox(height: 40),
                 GradientButton(
                   onPressed: () {},
+                  text: 'Continue',
                 ),
               ],
             ),
           ),
         ));
-  }
-}
-
-class GradientButton extends StatelessWidget {
-  final VoidCallback onPressed;
-
-  GradientButton({required this.onPressed});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Colors.blue, Colors.indigo.shade900],
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-        ),
-        borderRadius: BorderRadius.circular(25),
-      ),
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.transparent,
-          shadowColor: Colors.transparent,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25),
-          ),
-          padding: EdgeInsets.symmetric(vertical: 8.0),
-          minimumSize: Size(double.infinity, 14),
-        ),
-        onPressed: onPressed,
-        child: Text(
-          'Continue',
-          style: TextStyle(color: Colors.white),
-        ),
-      ),
-    );
   }
 }
