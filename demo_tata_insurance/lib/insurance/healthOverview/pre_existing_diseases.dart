@@ -2,7 +2,7 @@ import 'package:demo_tata_insurance/insurance/healthOverview/sample_values.dart'
 import 'package:flutter/material.dart';
 
 import 'custon_text_button.dart';
-import 'submit_button.dart';
+import '../components/submit_button.dart';
 
 class PreExistingDiseasesBottomSheet extends StatefulWidget {
   final ValueChanged<List<int>> onSelectionChanged;

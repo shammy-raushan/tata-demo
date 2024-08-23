@@ -3,7 +3,7 @@
 import 'package:demo_tata_insurance/insurance/healthOverview/custon_text_button.dart';
 import 'package:flutter/material.dart';
 
-import 'healthOverview/submit_button.dart';
+import 'components/submit_button.dart';
 
 class PlanTile extends StatelessWidget {
   const PlanTile({super.key});

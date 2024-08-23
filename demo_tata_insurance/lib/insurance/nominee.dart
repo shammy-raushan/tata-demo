@@ -1,6 +1,6 @@
 import 'package:demo_tata_insurance/insurance/healthOverview/questions_card.dart';
 import 'package:demo_tata_insurance/insurance/healthOverview/sample_values.dart';
-import 'package:demo_tata_insurance/insurance/healthOverview/submit_button.dart';
+import 'package:demo_tata_insurance/insurance/components/submit_button.dart';
 import 'package:flutter/material.dart';
 
 // import '../components/health_overview/questions_card.dart';
