@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class GradientButton extends StatelessWidget {
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final String text;
 
-  GradientButton({required this.onPressed, required this.text});
+  GradientButton({required this.text, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
