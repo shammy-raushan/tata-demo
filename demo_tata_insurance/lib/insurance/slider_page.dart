@@ -15,98 +15,91 @@ class _planspageState extends State<planspage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade300,
-      appBar: AppBar(
-        title: Image.asset(
-          'assets/tata-logo.png',
-          width: 100,
-          height: 60,
+        backgroundColor: Colors.grey.shade300,
+        appBar: AppBar(
+          title: Image.asset(
+            'assets/tata-logo.png',
+            width: 100,
+            height: 60,
+          ),
+          actions: const <Widget>[
+            Icon(Icons.question_mark_rounded),
+            SizedBox(width: 15),
+          ],
         ),
-        actions: const <Widget>[
-          Icon(Icons.question_mark_rounded),
-          SizedBox(width: 15),
-        ],
-      ),
-      body: Column(
-        children: [
-          const SizedBox(
-            height: 20,
-          ),
-          //Progress Bar
-          Container(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => HealthOverview(),
-                  ),
-                );
+        body: SingleChildScrollView(
+            child: Column(
+          children: [
+            const SizedBox(height: 20),
+            //Progress Bar
+            Container(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HealthOverview(),
+                    ),
+                  );
+                },
+                child: Text("Next"),
+              ),
+            ),
+
+            const SizedBox(height: 20),
+
+            //Title Text
+            const Text(
+              "We provide excellent\nplans tailored for you.",
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+
+            const SizedBox(height: 24),
+
+            //Sliding Segment Button
+            CupertinoSlidingSegmentedControl(
+              onValueChanged: (int? newvalue) {
+                setState(() {
+                  _sliding = newvalue;
+                });
               },
-              child: Text("Next"),
-            ),
-          ),
-
-          const SizedBox(
-            height: 20,
-          ),
-
-          //Title Text
-          const Text(
-            "We provide excellent\nplans tailored for you.",
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-
-          const SizedBox(
-            height: 30,
-          ),
-
-          //Sliding Segment Button
-          CupertinoSlidingSegmentedControl(
-            onValueChanged: (int? newvalue) {
-              setState(() {
-                _sliding = newvalue;
-              });
-            },
-            children: const {
-              0: Text('Yearly'),
-              1: Text('Monthly'),
-            },
-            groupValue: _sliding,
-          ),
-
-          const SizedBox(
-            height: 30,
-          ),
-
-          //Slider Plan Section
-
-          Expanded(
-            child: ListView.builder(
-              itemCount: 3,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (Context, index) {
-                return PlanTile();
+              children: const {
+                0: Text('Yearly'),
+                1: Text('Monthly'),
               },
+              groupValue: _sliding,
             ),
-          ),
 
-          const SizedBox(height: 30),
-
-          //Location Container
-          
-          Container(
-            width: 280,
-            decoration: const BoxDecoration(
-              color: Colors.black,
+            const SizedBox(
+              height: 24,
             ),
-          ),
-        ],
-      ),
-    );
+
+            Container(
+              height: 505,
+              child: ListView.builder(
+                itemCount: 3,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (Context, index) {
+                  return PlanTile();
+                },
+              ),
+            ),
+
+            const SizedBox(height: 30),
+
+            //Location Container
+
+            Container(
+              width: 280,
+              decoration: const BoxDecoration(
+                color: Colors.black,
+              ),
+            ),
+          ],
+        )));
   }
 }
