@@ -20,10 +20,10 @@ class _MyAppState extends State<MyApp> {
       // home: TataLogin(),
       // home: TermSelection(),
       home: NewTataLogin(),
-     
 
-     
       theme: ThemeData(
+        scaffoldBackgroundColor: Color(0xFFF5F5F5),
+
         // AppBar theme
         // primarySwatch: buildMaterialColor(Color(0xFFF7B61A)),
         primaryColor: Colors.red,
@@ -32,8 +32,6 @@ class _MyAppState extends State<MyApp> {
           foregroundColor: Color(0xFF13a8e1),
           centerTitle: false,
         ),
-
-
 
 // Elevated Button
         elevatedButtonTheme: ElevatedButtonThemeData(

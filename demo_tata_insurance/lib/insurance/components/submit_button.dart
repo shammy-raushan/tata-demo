@@ -3,20 +3,24 @@ import 'package:flutter/material.dart';
 class GradientButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final String text;
+  final bool isDisabled;
 
-  GradientButton({required this.text, this.onPressed});
+  GradientButton({required this.text, this.onPressed, this.isDisabled = false});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 45,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Color(0xFF32A2CA), Color(0xFF2B62AA)],
-          stops: [0.0, 0.75],
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-        ),
+        gradient: isDisabled
+            ? null
+            : LinearGradient(
+                colors: [Color(0xFF32A2CA), Color(0xFF2B62AA)],
+                stops: [0.0, 0.75],
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+              ),
+        color: isDisabled ? Color(0xFFDBDBDE) : null,
         borderRadius: BorderRadius.circular(25),
       ),
       child: ElevatedButton(
@@ -29,10 +33,12 @@ class GradientButton extends StatelessWidget {
           padding: EdgeInsets.symmetric(vertical: 8.0),
           minimumSize: Size(double.infinity, 14),
         ),
-        onPressed: onPressed,
+        onPressed: isDisabled ? null : onPressed,
         child: Text(
           text,
-          style: TextStyle(color: Colors.white, fontSize: 14),
+          style: TextStyle(
+              color: isDisabled ? Color(0xFF787878) : Colors.white,
+              fontSize: 14),
         ),
       ),
     );
