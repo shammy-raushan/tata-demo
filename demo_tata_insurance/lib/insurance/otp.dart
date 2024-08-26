@@ -18,7 +18,7 @@ class OTPValidation extends StatefulWidget {
 
 class _OTPValidationState extends State<OTPValidation> {
   OtpFieldController otpController = OtpFieldController();
-  bool _value = true;
+  bool isDisabled = true;
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +30,7 @@ class _OTPValidationState extends State<OTPValidation> {
           width: 100,
           height: 60,
         ),
-        actions: const <Widget>[
-          Icon(Icons.question_mark_rounded),
-          SizedBox(width: 15),
-        ],
+        automaticallyImplyLeading: false,
       ),
       body: Stack(children: <Widget>[
         Positioned.fill(
@@ -126,6 +123,9 @@ class _OTPValidationState extends State<OTPValidation> {
                         },
                         onCompleted: (pin) {
                           print("Completed: " + pin);
+                          setState(() {
+                            isDisabled = false;
+                          });
                         },
                       ),
                       const SizedBox(height: 20),
@@ -142,16 +142,15 @@ class _OTPValidationState extends State<OTPValidation> {
                             style: TextStyle(color: Colors.blue),
                           )),
                       GradientButton(
-                        onPressed: (_value == true)
-                            ? () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ProfileDetails(),
-                                  ),
-                                );
-                              }
-                            : null,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ProfileDetails(),
+                            ),
+                          );
+                        },
+                        isDisabled: isDisabled,
                         text: 'Next',
                       ),
                     ],

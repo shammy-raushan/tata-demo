@@ -4,8 +4,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-
 import 'components/submit_button.dart';
+import 'profile_details.dart';
 
 bool isChecked = false;
 
@@ -46,7 +46,12 @@ class _NewTataLoginState extends State<NewTataLogin> {
             right: 24,
             child: GestureDetector(
               onTap: () {
-                print("Close button pressed");
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => ProfileDetails(),
+                //   ),
+                // );
               },
               child: Container(
                 padding: EdgeInsets.all(6.0),
@@ -147,7 +152,13 @@ class _NewTataLoginState extends State<NewTataLogin> {
                                         ),
                                         recognizer: TapGestureRecognizer()
                                           ..onTap = () {
-                                            print("Link clicked!");
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ProfileDetails(),
+                                              ),
+                                            );
                                           },
                                       ),
                                       TextSpan(
@@ -184,16 +195,15 @@ class _NewTataLoginState extends State<NewTataLogin> {
                           ),
                           const SizedBox(height: 20),
                           GradientButton(
-                            onPressed: (_value == true)
-                                ? () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => OTPValidation(),
-                                      ),
-                                    );
-                                  }
-                                : null,
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => OTPValidation(),
+                                ),
+                              );
+                            },
+                            isDisabled: !_value,
                             text: 'Next',
                           ),
                         ],

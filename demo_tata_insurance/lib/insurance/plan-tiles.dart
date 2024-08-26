@@ -1,22 +1,21 @@
 // / ignore_for_file: file_names
 
-import 'package:demo_tata_insurance/insurance/healthOverview/custon_text_button.dart';
+import 'package:demo_tata_insurance/insurance/healthOverview/health_overview.dart';
 import 'package:flutter/material.dart';
 
 import 'components/submit_button.dart';
 
 class PlanTile extends StatelessWidget {
-  const PlanTile({super.key});
+  final int index;
+  final Map<String, dynamic> planData;
+  const PlanTile({super.key, required this.index, required this.planData});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      
       child: Container(
-        
         width: 280,
-        margin: const EdgeInsets.only(left: 25),
-        
+        margin: EdgeInsets.only(left: (index == 0) ? 25 : 0, right: 25),
         decoration: BoxDecoration(
           color: Colors.grey.shade100,
           border: Border.all(color: Colors.blue.shade900),
@@ -29,168 +28,119 @@ class PlanTile extends StatelessWidget {
         ),
         child: Column(
           children: [
-      
-            Container(
-              width: double.infinity,
-              height: 61,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: [
-                    Color(0xFF32A2CA), // #32A2CA
-                    Color(0xFF2B62AA), // #2B62AA
-                  ],
-                  stops: [0.0, 0.75], // 0% and 75%
-                ),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
-                ),
-              ),
-              child: 
-              Text("Recommended",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  )),
-            ),
-      
+            (index == 0)
+                ? Container(
+                    width: double.infinity,
+                    height: 61,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: [
+                          Color(0xFF32A2CA), // #32A2CA
+                          Color(0xFF2B62AA), // #2B62AA
+                        ],
+                        stops: [0.0, 0.75], // 0% and 75%
+                      ),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20),
+                      ),
+                    ),
+                    child: Text("Recommended",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        )),
+                  )
+                : SizedBox(height: 31),
+
             const SizedBox(height: 20),
-      
+
             //Title
-      
-            const Text(
-              "MediCare Premier",
+
+            Text(
+              planData['title'],
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
               ),
             ),
-      
+
             const SizedBox(height: 23),
-      
-            //Feature Section
-      
-            Align(
-              alignment: Alignment.topLeft,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Container(
-                  width: 150,
-                  height: 24,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 1,
-                      color: Colors.blueAccent,
-                    ),
-                    borderRadius: BorderRadius.circular(16),
-                    color: Colors.blue.withOpacity(0.10),
-                  ),
-                  child: const Row(
-                    children: [
-                      SizedBox(width: 6),
-                      Icon(
-                        Icons.check,
-                        size: 12,
-                        color: Colors.blueAccent,
-                      ),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      Text(
-                        'OPD Treatment',
-                        style: TextStyle(color: Colors.blueAccent, fontSize: 12),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: planData['features'].map<Widget>((feature) {
+                return PlanChip(title: feature);
+              }).toList(),
             ),
-      
             const SizedBox(height: 10),
-      
             Align(
-              alignment: Alignment.topLeft,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Container(
-                  width: 210,
-                  height: 24,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 1,
-                      color: Colors.blueAccent,
-                    ),
-                    borderRadius: BorderRadius.circular(16),
-                    color: Colors.blue.withOpacity(0.10),
-                  ),
-                  child: const Row(
-                    children: [
-                      SizedBox(width: 6),
-                      Icon(
-                        Icons.check,
-                        size: 12,
-                        color: Colors.blueAccent,
-                      ),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      Text(
-                        '100% Hospitals bills paid',
-                        style: TextStyle(
-                          color: Colors.blueAccent,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-      
-            const SizedBox(height: 14),
-            const Align(
               alignment: Alignment.topLeft,
               child: Padding(
                 padding: EdgeInsets.only(left: 20),
-                child: Text('& 30+ more benefits',
+                child: Text(planData['totalBenefits'],
                     style: TextStyle(
                       fontSize: 14,
                     )),
               ),
             ),
-      
+
             //Search Policy Bar
-      
+
             Container(
-              padding: const EdgeInsets.all(16),
-              child: const TextField(
+              height: 44.0,
+              margin: EdgeInsets.symmetric(vertical: 20.0),
+              padding: EdgeInsets.symmetric(horizontal: 12.0),
+              child: TextField(
                 onChanged: null,
                 decoration: InputDecoration(
-                  labelText: 'Search',
+                  labelText: 'Search within the policy',
+                  labelStyle: TextStyle(
+                    fontSize: 12.0,
+                    color: Color(0xFF686873),
+                    fontWeight: FontWeight.w500,
+                  ),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(20),
+                    borderRadius: BorderRadius.circular(50),
+                    borderSide: BorderSide.none,
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(50),
+                    borderSide: BorderSide(
+                      color: Color(0xFF686873),
+                      width: 0.5,
                     ),
                   ),
-                  prefixIcon: Icon(Icons.search),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(50),
+                    borderSide: BorderSide(
+                      color: Color(0xFF686873),
+                      width: 0.5,
+                    ),
+                  ),
+                  prefixIcon: Icon(
+                    Icons.search,
+                    size: 24.0,
+                  ),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 12.0),
                 ),
+                style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w500),
               ),
             ),
-            //Discount Text
-      
+
             Text(
-              '10,186/year incl GST',
+              planData['discount'],
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w600,
               ),
             ),
-      
+
             //Hyperlink
             SizedBox(height: 27),
             Text(
@@ -200,16 +150,62 @@ class PlanTile extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                   color: Colors.blue.shade900),
             ),
-      
+
             //Apply Now Button
             SizedBox(height: 30),
-      
+
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: GradientButton(
-                onPressed: () {},
-                text: 'Continue',
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HealthOverview(),
+                    ),
+                  );
+                },
+                text: 'Apply Now',
               ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class PlanChip extends StatelessWidget {
+  final String title;
+  const PlanChip({super.key, required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.topLeft,
+      child: Container(
+        margin: const EdgeInsets.only(left: 10, bottom: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+        decoration: BoxDecoration(
+          border: Border.all(
+            width: 1,
+            color: Colors.blueAccent,
+          ),
+          borderRadius: BorderRadius.circular(16),
+          color: Colors.blue.withOpacity(0.10),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.check,
+              size: 12,
+              color: const Color.fromARGB(255, 9, 56, 127),
+            ),
+            SizedBox(width: 6),
+            Text(
+              title,
+              style: TextStyle(color: Colors.blueAccent, fontSize: 12),
             ),
           ],
         ),

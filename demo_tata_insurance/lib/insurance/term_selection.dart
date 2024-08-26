@@ -1,12 +1,13 @@
 // import 'package:demo_tata_insurance/insurance/selection.dart';
+import 'package:demo_tata_insurance/insurance/components/submit_button.dart';
 import 'package:demo_tata_insurance/insurance/slider_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:step_progress_indicator/step_progress_indicator.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:intl/intl.dart' as intl;
 import 'package:demo_tata_insurance/global.dart' as globals;
-import 'package:toggle_switch/toggle_switch.dart';
+
+import 'components/custom_stepper.dart';
 
 enum ProductType { Gold, Silver, Dimond, Blank }
 
@@ -18,15 +19,12 @@ class TermSelection extends StatefulWidget {
 }
 
 class _TermSelectionState extends State<TermSelection> {
-  bool _value1 = false;
-
   final myController = TextEditingController();
 
   int months_option = globals.months_option;
 
   double rate = 7.20;
 
-  ProductType? _productType;
   String selectType = globals.interest_type;
   int selectAmount = globals.deposit_amount;
   int finalAmount = globals.maturity_amount;
@@ -59,6 +57,19 @@ class _TermSelectionState extends State<TermSelection> {
     return res;
   }
 
+  static List<Map<String, dynamic>> termAmount = [
+    {"label": "10 L", "value": 1000000},
+    {"label": "25 L", "value": 2500000},
+    {"label": "50 L", "value": 5000000},
+    {"label": "1 Cr", "value": 10000000},
+  ];
+
+  static List<Map<String, dynamic>> termTenure = [
+    {"label": "1 yr", "value": 1},
+    {"label": "2 yrs", "value": 2},
+    {"label": "3 yrs", "value": 3},
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,381 +79,134 @@ class _TermSelectionState extends State<TermSelection> {
           width: 100,
           height: 60,
         ),
+        automaticallyImplyLeading: false,
         actions: const <Widget>[
-          Icon(Icons.question_mark_rounded),
+          Icon(Icons.pin_drop),
+          Text("New Delhi",
+              style: TextStyle(fontSize: 16, color: Colors.black)),
           SizedBox(width: 15),
         ],
       ),
       body: Stack(children: <Widget>[
-        Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/bg.png"),
-              fit: BoxFit.cover,
-            ),
+        Positioned.fill(
+            child: Opacity(
+          opacity: 0.04,
+          child: Image.asset(
+            'assets/pattern.png',
+            fit: BoxFit.cover,
           ),
-
-          //
-        ),
-       
-        Padding(
-          padding: const EdgeInsets.all(20),
-          child: InkWell(
-            splashColor: const Color(0xFF13a8e1).withAlpha(30),
+        )),
+        SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(20),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // try
+                const CustomSteppper(currentStep: 2),
+                SizedBox(height: 30),
                 Row(
                   children: [
                     const Text(
                       "Cover Amount",
                       style: TextStyle(
                           fontSize: 24,
-                          fontWeight: FontWeight.w800,
+                          fontWeight: FontWeight.w700,
                           color: Colors.black),
                     ),
                     Padding(
-                        padding: const EdgeInsets.only(left: 80.0),
+                        padding: const EdgeInsets.only(left: 20.0),
                         child: Icon(Icons.info_outline)),
                   ],
                 ),
-            
-                SizedBox(
-                  width: double.infinity,
-                  child: Text(
-                    'How Much Health Coverage Do You Need',
-                    style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey,
-                        fontWeight: FontWeight.w400),
-                  ),
+                const SizedBox(height: 18),
+                Text(
+                  'How much health coverage do you need?',
+                  style: TextStyle(
+                      fontSize: 12,
+                      color: Color(0xFF666666),
+                      fontWeight: FontWeight.w400),
                 ),
                 const SizedBox(height: 8),
-            
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectAmount = 1000000;
-                        });
-                      },
-                      child: Card(
-                        shape: (selectAmount == 1000000)
-                            ? RoundedRectangleBorder(
-                                side: const BorderSide(
-                                    color: Color(0xFF13A8E1), width: 4.0),
-                                borderRadius: BorderRadius.circular(10.0))
-                            : null,
-                        elevation: 4,
-                        child: SizedBox(
-                          // height: 80,
-                          width: 70, height: 30,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Row(
-                                children: [
-                                  Icon(Icons.currency_rupee),
-                                  Text(
-                                    "10 L",
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        color: Color(0xFF13A8E1)),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectAmount = 2500000;
-                        });
-                      },
-                      child: Card(
-                        shape: (selectAmount == 2500000)
-                            ? RoundedRectangleBorder(
-                                side: const BorderSide(
-                                    color: Color(0xFF13A8E1), width: 4.0),
-                                borderRadius: BorderRadius.circular(10.0))
-                            : null,
-                        elevation: 4,
-                        child: SizedBox(
-                          // height: 80,
-                          width: 70, height: 30,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Row(
-                                children: [
-                                  Icon(Icons.currency_rupee),
-                                  Text(
-                                    "25 L",
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        color: Color(0xFF13A8E1)),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectAmount = 5000000;
-                        });
-                      },
-                      child: Card(
-                        shape: (selectAmount == 5000000)
-                            ? RoundedRectangleBorder(
-                                side: const BorderSide(
-                                    color: Color(0xFF13A8E1), width: 4.0),
-                                borderRadius: BorderRadius.circular(10.0))
-                            : null,
-                        elevation: 4,
-                        child: SizedBox(
-                          // height: 80,
-                          width: 76, height: 30,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Row(
-                                children: [
-                                  Icon(Icons.currency_rupee),
-                                  Text(
-                                    "75 L",
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        color: Color(0xFF13A8E1)),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectAmount = 10000000;
-                        });
-                      },
-                      child: Card(
-                        shape: (selectAmount == 10000000)
-                            ? RoundedRectangleBorder(
-                                side: const BorderSide(
-                                    color: Color(0xFF13A8E1), width: 4.0),
-                                borderRadius: BorderRadius.circular(10.0))
-                            : null,
-                        elevation: 4,
-                        child: SizedBox(
-                          // height: 80,
-                          width: 80, height: 30,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.currency_rupee,
-                                  ),
-                                  Text(
-                                    "1 cr",
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        color: Color(0xFF13A8E1)),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                Wrap(
+                  spacing: 20.0,
+                  runSpacing: 24.0,
+                  children: termAmount.asMap().entries.map((entry) {
+                    var option = entry.value;
+                    return TermChip(
+                      option: option,
+                      isSelected: selectAmount == option['value'],
+                      onTermAmountSelected: onTermAmountSelected,
+                    );
+                  }).toList(),
                 ),
                 const SizedBox(height: 18),
-            
-                SizedBox(
-                  width: double.infinity,
-                  child: Text(
-                    'Select tenure',
-                    style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey,
-                        fontWeight: FontWeight.w400),
-                  ),
+                Text(
+                  'Select tenure',
+                  style: TextStyle(
+                      fontSize: 12,
+                      color: Color(0xFF666666),
+                      fontWeight: FontWeight.w400),
                 ),
                 const SizedBox(height: 8),
-            
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          tenure = 1;
-                        });
-                      },
-                      child: Card(
-                        shape: (tenure == 1)
-                            ? RoundedRectangleBorder(
-                                side: const BorderSide(
-                                    color: Color(0xFF13A8E1), width: 4.0),
-                                borderRadius: BorderRadius.circular(10.0))
-                            : null,
-                        elevation: 4,
-                        child: SizedBox(
-                          // height: 80,
-                          width: 70, height: 30,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                "1 yr",
-                                style: TextStyle(
-                                    fontSize: 16, color: Color(0xFF13A8E1)),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          tenure = 2;
-                        });
-                      },
-                      child: Card(
-                        shape: (tenure == 2)
-                            ? RoundedRectangleBorder(
-                                side: const BorderSide(
-                                    color: Color(0xFF13A8E1), width: 4.0),
-                                borderRadius: BorderRadius.circular(10.0))
-                            : null,
-                        elevation: 4,
-                        child: SizedBox(
-                          // height: 80,
-                          width: 70, height: 30,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                "2 yr",
-                                style: TextStyle(
-                                    fontSize: 16, color: Color(0xFF13A8E1)),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          tenure = 3;
-                        });
-                      },
-                      child: Card(
-                        shape: (tenure == 3)
-                            ? RoundedRectangleBorder(
-                                side: const BorderSide(
-                                    color: Color(0xFF13A8E1), width: 4.0),
-                                borderRadius: BorderRadius.circular(10.0))
-                            : null,
-                        elevation: 4,
-                        child: SizedBox(
-                          // height: 80,
-                          width: 76, height: 30,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                "3 yr",
-                                style: TextStyle(
-                                    fontSize: 16, color: Color(0xFF13A8E1)),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                Wrap(
+                  spacing: 20.0,
+                  runSpacing: 24.0,
+                  children: termTenure.asMap().entries.map((entry) {
+                    var option = entry.value;
+                    return TermChip(
+                      option: option,
+                      isSelected: tenure == option['value'],
+                      onTermAmountSelected: onTermTenureSelected,
+                    );
+                  }).toList(),
                 ),
-            
-                SizedBox(
-                  height: 20,
+                SizedBox(height: 20),
+                const Center(
+                  child: Text(
+                    "Or",
+                    style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xFF222222)),
+                  ),
                 ),
-                const Text(
-                  "Or",
-                  style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w800,
-                      color: Colors.black),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 TextFormField(
                   autofocus: false,
                   controller: TextEditingController(
-                    text: formats
-                        .format((selectAmount > 0) ? selectAmount : 1000000),
-                  ),
-                  decoration: const InputDecoration(
+                      text:
+                          'INR ${formats.format((selectAmount > 0) ? selectAmount : 1000000)}'),
+                  decoration: InputDecoration(
                     labelText: "Amount",
-                    labelStyle: TextStyle(color: Colors.grey),
-            
-                    border: OutlineInputBorder(),
-                    filled: true, //<-- SEE HERE
+                    labelStyle: TextStyle(color: Color(0xFF666666)),
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    disabledBorder: InputBorder.none,
+                    filled: true,
                     fillColor: Colors.white,
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
                   ),
                 ),
-            
                 const SizedBox(height: 20),
-                Container(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => planspage(),
-                          ),
-                        );
-                      },
-                      child: Text("Next")),
-                ),
+                GradientButton(
+                    text: "Next",
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => planspage(),
+                        ),
+                      );
+                    }),
                 const SizedBox(height: 20),
-            
                 Center(
                   child: PhysicalModel(
                     color: Colors.white,
-                    elevation: 8,
-                    // shadowColor: Colors.blue,
                     borderRadius: BorderRadius.circular(20),
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20,4,20,4),
+                      padding: const EdgeInsets.all(20),
                       child: Container(
                         width: double.infinity,
                         // height: 100,
@@ -450,63 +214,109 @@ class _TermSelectionState extends State<TermSelection> {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             const Text(
-                              "Unsecure?",
+                              "Unsure?",
                               style: TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.w600,
+                                fontSize: 26,
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
                             const SizedBox(height: 10),
                             Row(
                               children: [
-                                const Text(
-                                  "complete this short\nquestionnaire to find the ideal\ninsurance plan for you",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.grey),
+                                Expanded(
+                                  child: const Text(
+                                    "complete this short questionnaire to find the ideal insurance plan for you",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        color: Color(0xFF0B2110)),
+                                  ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 60.0),
-                                  child: Icon(Icons.file_copy_outlined),
-                                )
+                                    padding: const EdgeInsets.only(left: 60.0),
+                                    child: SvgPicture.asset(
+                                      'assets/KycForm.svg',
+                                      width: 60,
+                                    )),
                               ],
                             ),
                             const SizedBox(height: 20),
+                            Divider(),
+                            const SizedBox(height: 20),
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => planspage(),
+                                  ),
+                                );
+                              },
+                              child: Center(
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 17, vertical: 8),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Colors.black,
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(25),
+                                  ),
+                                  child: Text(
+                                    'Show me my ideal insurance plan',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       ),
                     ),
                   ),
                 ),
-                // Container(
-                //   height: 50,
-                //   margin: const EdgeInsets.only(top: 20),
-                //   decoration: BoxDecoration(
-                //     color: Colors.blue.withOpacity(0.1),
-                //     border: Border.all(
-                //       color: Colors.blueAccent,
-                //     ),
-                //     borderRadius: BorderRadius.circular(12.0),
-                //   ),
-                //   child: Row(
-                //     children: [
-                //       Image.asset(
-                //         'assets/profile.png',
-                //         width: 55,
-                //         height: 20,
-                //       ),
-                //       Text(
-                //         "Unsure about the cover amount to choose?",
-                //         style: TextStyle(
-                //           fontSize: 12,
-                //           color: Color.fromARGB(255, 128, 128, 128),
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
-             
+                Container(
+                  height: 64,
+                  margin: const EdgeInsets.only(top: 20, bottom: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  decoration: BoxDecoration(
+                    color: Color(0xFFE7EEFB),
+                    border: Border.all(
+                      color: Color(0xFF254A9E), // Border color
+                      width: 1.0, // Border width
+                    ),
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                  child: Row(
+                    children: [
+                      Image.asset(
+                        'assets/Mask-group.png',
+                        height: 63,
+                        fit: BoxFit.cover,
+                      ),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          "Unsure about the cover \namount to choose?",
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Color(0xFF787878),
+                          ),
+                        ),
+                      ),
+                      Icon(
+                        Icons.play_circle,
+                        color: Color(0xFF5F6368),
+                        size: 14,
+                      )
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -514,4 +324,68 @@ class _TermSelectionState extends State<TermSelection> {
       ]),
     );
   }
+
+  void onTermAmountSelected(int amount) {
+    setState(() {
+      selectAmount = amount;
+    });
+  }
+
+  void onTermTenureSelected(int amount) {
+    setState(() {
+      tenure = amount;
+    });
+  }
 }
+
+class TermChip extends StatelessWidget {
+  final Map<String, dynamic> option;
+  final bool isSelected;
+  final Function(int) onTermAmountSelected;
+  const TermChip(
+      {super.key,
+      required this.option,
+      required this.isSelected,
+      required this.onTermAmountSelected});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+        onTap: () {
+          // if (option == "10 L") {
+          //   globals.deposit_amount = 1000000;
+          // } else if (option == "25 L") {
+          //   globals.deposit_amount = 2500000;
+          // } else if (option == "50 L") {
+          //   globals.deposit_amount = 5000000;
+          // } else if (option == "1 Cr") {
+          //   globals.deposit_amount = 10000000;
+          // }
+          onTermAmountSelected(option['value']);
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8.0),
+            border:
+                Border.all(color: Color(0xFF254A9E), width: isSelected ? 1 : 0),
+            color: isSelected ? Colors.blue.withOpacity(0.1) : Colors.white,
+          ),
+          padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 5.0),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                  ((option['value'] ==1 ) || (option['value'] == 2)||
+                          (option['value'] == 3)) ?'${option['label']}':'₹ ${option['label']}',
+                  style: TextStyle(
+                    color: isSelected ? Colors.blue : Colors.black,
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.w600,
+                  )),
+            ],
+          ),
+        ));
+  }
+}
+
+
