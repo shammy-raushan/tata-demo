@@ -1,4 +1,4 @@
-import 'package:demo_tata_insurance/insurance/new_login.dart';
+import 'package:demo_tata_insurance/insurance/home.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -19,7 +19,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       // home: TataLogin(),
       // home: TermSelection(),
-      home: NewTataLogin(),
+      home: HomePage(),
 
       theme: ThemeData(
         scaffoldBackgroundColor: Color(0xFFF5F5F5),

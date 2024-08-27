@@ -1,7 +1,9 @@
-import 'package:demo_tata_insurance/insurance/healthOverview/questions_card.dart';
-import 'package:demo_tata_insurance/insurance/healthOverview/sample_values.dart';
+import 'package:demo_tata_insurance/insurance/components/login_textbox.dart';
 import 'package:demo_tata_insurance/insurance/components/submit_button.dart';
+import 'package:demo_tata_insurance/insurance/proposal.dart';
 import 'package:flutter/material.dart';
+
+import 'components/custom_stepper.dart';
 
 // import '../components/health_overview/questions_card.dart';
 
@@ -35,66 +37,45 @@ class _NomineeDetailsState extends State<NomineeDetails> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const CustomSteppper(currentStep: 3),
+                SizedBox(height: 30),
                 Card(
+                  elevation: 8,
                   margin: const EdgeInsets.only(bottom: 24.0),
                   color: Colors.white,
                   child: Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24, vertical: 40),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text('Nominee Details',
                             style: TextStyle(
-                                fontSize: 22, fontWeight: FontWeight.bold)),
+                                fontSize: 22, fontWeight: FontWeight.w700)),
                         const SizedBox(height: 4),
-
-                        const Text('Secure your dependents',
-                            style: TextStyle(
-                                fontSize: 14, color: Colors.grey,fontWeight: FontWeight.w300),),
-                        
+                        const Text(
+                          'Provide nominee details',
+                          style: TextStyle(
+                              fontSize: 10,
+                              color: Color(0xFF666666),
+                              fontWeight: FontWeight.w400),
+                        ),
                         const SizedBox(height: 40.0),
-                        TextFormField(
-                          autofocus: false,
-                          decoration: const InputDecoration(
-                            labelText: "Nominee name",
-                            labelStyle: TextStyle(color: Colors.grey),
-                            border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(4.0)),
-                            ),
-                            filled: true, //<-- SEE HERE
-                            fillColor: Color.fromARGB(255, 247, 246, 246),
-                          ),
-                        ),
+                        LoginTextBox(labelText: "Nominee name"),
                         const SizedBox(height: 20),
-                        TextFormField(
-                          autofocus: false,
-                          // initialValue: "2,50,000cccc",
-                          decoration: const InputDecoration(
-                            labelText: "Date of birth",
-                            labelStyle: TextStyle(color: Colors.grey),
-                            border: OutlineInputBorder(),
-                            filled: true, //<-- SEE HERE
-                            fillColor: Color.fromARGB(255, 247, 246, 246),
-                          ),
-                        ),
+                        LoginTextBox(labelText: "Date of birth"),
                         const SizedBox(height: 20),
-
-                        TextFormField(
-                          autofocus: false,
-                          // initialValue: "2,50,000cccc",
-                          decoration: const InputDecoration(
-                            labelText: "Relationship",
-                            labelStyle: TextStyle(color: Colors.grey),
-                            border: OutlineInputBorder(),
-                            filled: true, //<-- SEE HERE
-                            fillColor: Color.fromARGB(255, 247, 246, 246),
-                          ),
-                        ),
-                        const SizedBox(height: 40),
-
+                        LoginTextBox(labelText: "Relationship"),
+                        const SizedBox(height: 96),
                         GradientButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ProposalPage(),
+                              ),
+                            );
+                          },
                           text: 'Cofirm & Proceed',
                         ),
                       ],
