@@ -19,45 +19,48 @@ class _CustomSteppperState extends State<CustomSteppper> {
   }
 
   final List<String> _labels = [
-    'Details',
-    'Quote',
-    'Health',
+    'Profile',
+    'Plan',
+    'Proposal',
     'Payment',
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        SizedBox(height: 10),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: List.generate(
-            _labels.length,
-            (index) => Expanded(
-              child: Column(
-                children: <Widget>[
-                  Text(
-                    _labels[index],
-                    textAlign: TextAlign.left,
-                    style: TextStyle(fontSize: 12, color: Colors.black),
-                  ),
-                ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      child: Column(
+        children: <Widget>[
+          SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: List.generate(
+              _labels.length,
+              (index) => Expanded(
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      _labels[index],
+                      textAlign: TextAlign.left,
+                      style: TextStyle(fontSize: 12, color: Colors.black),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-        SizedBox(height: 10),
-        StepProgressIndicator(
-          totalSteps: _labels.length,
-          currentStep: _currentStep,
-          size: 8,
-          padding: 5,
-          selectedColor: Color(0xFF00AE4E),
-          unselectedColor: Color(0xFFC9C9C9),
-          roundedEdges: Radius.circular(10),
-        ),
-      ],
+          SizedBox(height: 10),
+          StepProgressIndicator(
+            totalSteps: _labels.length,
+            currentStep: _currentStep,
+            size: 8,
+            padding: 5,
+            selectedColor: Color(0xFF00AE4E),
+            unselectedColor: Color(0xFFC9C9C9),
+            roundedEdges: Radius.circular(10),
+          ),
+        ],
+      ),
     );
   }
 }

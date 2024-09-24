@@ -1,5 +1,5 @@
 import 'package:demo_tata_insurance/insurance/components/submit_button.dart';
-import 'package:demo_tata_insurance/insurance/new_login.dart';
+import 'package:demo_tata_insurance/insurance/login.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -29,6 +29,7 @@ class _HomePageState extends State<HomePage> {
           child: Image.asset(
             'assets/banner.png',
             fit: BoxFit.cover,
+            height: 350,
           ),
         ),
         Positioned.fill(
@@ -43,9 +44,11 @@ class _HomePageState extends State<HomePage> {
                   child: Padding(
                       padding: const EdgeInsets.fromLTRB(23, 40, 26, 20),
                       child: Container(
-                          width: double.infinity,
+                          constraints: BoxConstraints(
+                            maxWidth: 350, // Set the maximum width here
+                          ),
                           child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 RichText(
                                   text: TextSpan(
@@ -68,101 +71,37 @@ class _HomePageState extends State<HomePage> {
                                     ],
                                   ),
                                 ),
+                                SizedBox(height: 34),
+                                Text(
+                                  'TATA AIG - Your Preferred Partner',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.black),
+                                ),
+                                SizedBox(height: 4),
+                                CircularImageWithText(
+                                    image: "icons/description.png",
+                                    boldText: '5 cr + ',
+                                    normalText:
+                                        'customers serviced since inception'),
+                                CircularImageWithText(
+                                    image: "icons/rupee.png",
+                                    boldText: '96.70% ',
+                                    normalText: 'claims paid'),
+                                CircularImageWithText(
+                                    image: "icons/police.png",
+                                    boldText: '11000 + ',
+                                    normalText: 'cashless hospitals'),
                                 SizedBox(height: 50),
-                                Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      CircularIconWithText(
-                                        icon: Icons.calendar_month,
-                                        text: Column(
-                                          children: [
-                                            SizedBox(height: 5),
-                                            Text(
-                                              '2 step quote',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                  fontSize: 10,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Colors.black),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      CircularIconWithText(
-                                        icon: Icons.text_snippet,
-                                        text: const Text(
-                                          'ABHA\nIntegrated',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        ),
-                                      ),
-                                      CircularIconWithText(
-                                        icon: Icons.currency_rupee,
-                                        text: RichText(
-                                          textAlign: TextAlign.center,
-                                          text: TextSpan(
-                                            style: TextStyle(
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w400,
-                                              color: Colors
-                                                  .black, // Default text color
-                                            ),
-                                            children: <TextSpan>[
-                                              TextSpan(
-                                                text: 'Low',
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight
-                                                      .w700, // Bold font weight for "Low"
-                                                ),
-                                              ),
-                                              TextSpan(
-                                                text: '\nInterest Rates',
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      CircularIconWithText(
-                                        icon: Icons.local_police,
-                                        text: RichText(
-                                          textAlign: TextAlign.center,
-                                          text: TextSpan(
-                                            style: TextStyle(
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w400,
-                                              color: Colors
-                                                  .black, // Default text color
-                                            ),
-                                            children: <TextSpan>[
-                                              TextSpan(
-                                                text: '100%',
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight
-                                                      .w700, // Bold font weight for "Low"
-                                                ),
-                                              ),
-                                              TextSpan(
-                                                text: '\nSecure & Easy',
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ]),
-                                SizedBox(height: 60),
                                 GradientButton(
                                   text: "Apply Now",
                                   onPressed: () {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => NewTataLogin(),
+                                        builder: (context) => TataLogin(),
                                       ),
                                     );
                                   },
@@ -208,6 +147,66 @@ class CircularIconWithText extends StatelessWidget {
           child: text,
         ),
       ],
+    );
+  }
+}
+
+class CircularImage extends StatelessWidget {
+  final String image;
+  const CircularImage({super.key, required this.image});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 44.0,
+      height: 44.0,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Color(0xFF2B62AA).withOpacity(0.16),
+      ),
+      child: Image.asset(image),
+      alignment: Alignment.center,
+    );
+  }
+}
+
+class CircularImageWithText extends StatelessWidget {
+  final String image;
+  final String boldText;
+  final String normalText;
+  const CircularImageWithText(
+      {super.key,
+      required this.image,
+      required this.boldText,
+      required this.normalText});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 25),
+      child: Row(
+        children: [
+          CircularImage(image: image),
+          SizedBox(width: 15),
+          RichText(
+            text: TextSpan(
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+                color: Colors.black,
+              ),
+              children: <TextSpan>[
+                TextSpan(
+                    text: boldText,
+                    style: TextStyle(fontWeight: FontWeight.w700)),
+                TextSpan(
+                  text: normalText,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

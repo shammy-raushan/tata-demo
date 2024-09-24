@@ -12,6 +12,7 @@ class SelfSelection extends StatefulWidget {
 }
 
 class _SelfSelectionState extends State<SelfSelection> {
+  final _formKey = GlobalKey<FormState>();
   String cardSel = '';
   @override
   Widget build(BuildContext context) {
@@ -39,51 +40,86 @@ class _SelfSelectionState extends State<SelfSelection> {
             fit: BoxFit.cover,
           ),
         )),
-        Padding(
+        Positioned(
+            top: 20,
+            left: 0,
+            right: 0,
+            child: Column(
+              children: [
+                const CustomSteppper(
+                  currentStep: 1,
+                ),
+                SizedBox(height: 14),
+                Image.asset(
+                  'assets/InsuredCouple.png',
+                  fit: BoxFit.cover,
+                ),
+              ],
+            )),
+        Positioned.fill(
+            child: SingleChildScrollView(
+                child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const CustomSteppper(
-                currentStep: 1,
-              ),
-              const SizedBox(height: 40),
-              const Text(
-                "Who all do you want to insure?",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w700,
-                    color: Color(0xFF686873)),
-              ),
-              const SizedBox(height: 40),
-              CustomSelector(
-                  cardSel: cardSel,
-                  onCardSelected: onCardSelected,
-                  title: "Self",
-                  imgUrl: "assets/female.png"),
-              const SizedBox(height: 24),
-              CustomSelector(
-                  cardSel: cardSel,
-                  onCardSelected: onCardSelected,
-                  title: "Family",
-                  imgUrl: "assets/family.png"),
-              const SizedBox(height: 40),
-              Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 45),
-                  child: GradientButton(
-                      text: "Proceed",
-                      isDisabled: cardSel.isEmpty,
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => TermSelection(),
-                            ));
-                      })),
+              const SizedBox(height: 217),
+              PhysicalModel(
+                  color: Colors.white.withOpacity(0.9),
+                  elevation: 1,
+                  // shadowColor: Colors.blue,
+                  borderRadius: BorderRadius.circular(20),
+                  child: Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 44, 20, 30),
+                      child: Container(
+                          constraints: BoxConstraints(
+                            maxWidth: 350, // Set the maximum width here
+                          ),
+                          child: Form(
+                              key: _formKey,
+                              child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    const Text(
+                                      "Who all do you want to insure?",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.w700,
+                                          color: Color(0xFF686873)),
+                                    ),
+                                    const SizedBox(height: 40),
+                                    CustomSelector(
+                                        cardSel: cardSel,
+                                        onCardSelected: onCardSelected,
+                                        title: "Self",
+                                        imgUrl: "assets/female.png"),
+                                    const SizedBox(height: 24),
+                                    CustomSelector(
+                                        cardSel: cardSel,
+                                        onCardSelected: onCardSelected,
+                                        title: "Family",
+                                        imgUrl: "assets/family.png"),
+                                    const SizedBox(height: 40),
+                                    Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 45),
+                                        child: GradientButton(
+                                            text: "Proceed",
+                                            isDisabled: cardSel.isEmpty,
+                                            onPressed: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        TermSelection(),
+                                                  ));
+                                            })),
+                                  ])))))
             ],
           ),
-        ),
+        ))),
       ]),
     );
   }
@@ -114,7 +150,7 @@ class CustomSelector extends StatelessWidget {
         onCardSelected(title);
       },
       child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 54),
+          margin: EdgeInsets.symmetric(horizontal: 20),
           height: 80,
           decoration: BoxDecoration(
             color: Colors.white.withOpacity(0.6),
