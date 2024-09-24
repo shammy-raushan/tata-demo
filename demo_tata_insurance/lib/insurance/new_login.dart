@@ -94,6 +94,9 @@ class _NewTataLoginState extends State<NewTataLogin> {
                     child: Container(
                       width: double.infinity,
                       height: 480,
+                      constraints: BoxConstraints(
+                        maxWidth: 350, // Set the maximum width here
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [

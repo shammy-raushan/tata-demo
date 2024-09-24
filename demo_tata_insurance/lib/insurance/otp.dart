@@ -1,12 +1,9 @@
-import 'package:demo_tata_insurance/insurance/home.dart';
+import 'package:demo_tata_insurance/insurance/profile_details.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
 
 import 'components/submit_button.dart';
-import 'self.dart';
-// import 'infoPL.dart';
 
 bool isChecked = false;
 
@@ -34,53 +31,16 @@ class _OTPValidationState extends State<OTPValidation> {
         automaticallyImplyLeading: false,
       ),
       body: Stack(children: <Widget>[
-        Positioned.fill(
-            child: Opacity(
-          opacity: 0.04,
-          child: Image.asset(
-            'assets/pattern.png',
-            fit: BoxFit.cover,
-          ),
-        )),
         Positioned(
-          top: 20,
-          right: 24,
-          child: InkWell(
-            onTap: () {
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => HomePage(),
-                ),
-                (route) => false,
-              );
-            },
-            child: Container(
-              padding: EdgeInsets.all(6.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(50.0),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.2),
-                    blurRadius: 1.0,
-                    offset: Offset(0, 1),
-                  ),
-                ],
-              ),
-              child: Icon(
-                Icons.close,
-                color: Colors.blue,
-                size: 16.0,
-              ),
-            ),
+          top: 0,
+          left: -62,
+          right: 0,
+          child: Image.asset(
+            'assets/banner.png',
+            fit: BoxFit.cover,
+            height: 350,
           ),
         ),
-        Positioned(
-            top: 50,
-            left: 0,
-            right: 0,
-            child: SvgPicture.asset('assets/signIn.svg')),
         SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(20, 240, 20, 20),
@@ -92,10 +52,12 @@ class _OTPValidationState extends State<OTPValidation> {
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Container(
-                    width: double.infinity,
+                    constraints: BoxConstraints(
+                      maxWidth: 350,
+                    ),
                     height: 308,
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
                           "Let's Get Started!",
@@ -115,6 +77,7 @@ class _OTPValidationState extends State<OTPValidation> {
                         ),
                         const SizedBox(height: 40),
                         OTPTextField(
+                          obscureText: true,
                           controller: otpController,
                           length: 6,
                           width: MediaQuery.of(context).size.width * 0.8,
@@ -149,12 +112,13 @@ class _OTPValidationState extends State<OTPValidation> {
                               "Resend OTP",
                               style: TextStyle(color: Colors.blue),
                             )),
+                        SizedBox(height: 20),
                         GradientButton(
                           onPressed: () {
                             Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => SelfSelection(),
+                                builder: (context) => ProfileDetails(),
                               ),
                               (route) => false,
                             );

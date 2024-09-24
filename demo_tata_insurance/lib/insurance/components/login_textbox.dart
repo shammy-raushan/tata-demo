@@ -1,5 +1,6 @@
 // custom_text_form_field.dart
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class LoginTextBox extends StatelessWidget {
   final String labelText;
@@ -7,14 +8,29 @@ class LoginTextBox extends StatelessWidget {
   final bool autofocus;
   final TextStyle? textStyle;
   final InputDecoration? decoration;
+  final FormFieldValidator<String>? validator;
+  final TextInputType? keyboardType;
+  final int? maxLength;
+  final bool obscureText;
+  final Widget? suffixIcon;
+  final bool readOnly;
+  final Function()? onTap;
+  final List<TextInputFormatter>? inputFormatters;
 
-  LoginTextBox({
-    required this.labelText,
-    this.controller,
-    this.autofocus = false,
-    this.textStyle,
-    this.decoration,
-  });
+  LoginTextBox(
+      {required this.labelText,
+      this.controller,
+      this.autofocus = false,
+      this.textStyle,
+      this.decoration,
+      this.validator,
+      this.keyboardType,
+      this.maxLength,
+      this.obscureText = false,
+      this.suffixIcon,
+      this.readOnly = false,
+      this.onTap,
+      this.inputFormatters});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +38,14 @@ class LoginTextBox extends StatelessWidget {
       height: 56,
       child: TextFormField(
         controller: controller,
+        obscureText: obscureText,
         autofocus: autofocus,
+        validator: validator,
+        keyboardType: keyboardType,
+        maxLength: maxLength,
+        readOnly: readOnly,
+        onTap: onTap,
+        inputFormatters: inputFormatters,
         style: textStyle ??
             TextStyle(
               fontFamily: 'Inter',
@@ -32,7 +55,8 @@ class LoginTextBox extends StatelessWidget {
         decoration: decoration ??
             InputDecoration(
               labelText: labelText,
-              labelStyle: TextStyle(color: Color(0xFF787878)),
+              labelStyle: TextStyle(color: Color(0xFF787878), fontSize: 14),
+              counterText: '',
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(6.0)),
                 borderSide: BorderSide(
@@ -56,6 +80,7 @@ class LoginTextBox extends StatelessWidget {
               ),
               filled: true,
               fillColor: Colors.white,
+              suffixIcon: suffixIcon,
             ),
       ),
     );

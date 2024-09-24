@@ -1,5 +1,12 @@
 import 'package:demo_tata_insurance/insurance/home.dart';
+import 'package:demo_tata_insurance/insurance/self.dart';
+import 'package:demo_tata_insurance/insurance/term_selection.dart';
 import 'package:flutter/material.dart';
+import 'package:otp_text_field/otp_field.dart';
+
+import 'insurance/otp.dart';
+import 'insurance/profile_details.dart';
+import 'insurance/slider_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -23,6 +30,7 @@ class _MyAppState extends State<MyApp> {
 
       theme: ThemeData(
         scaffoldBackgroundColor: Color(0xFFF5F5F5),
+        fontFamily: 'openSans',
 
         // AppBar theme
         // primarySwatch: buildMaterialColor(Color(0xFFF7B61A)),
@@ -60,7 +68,7 @@ class _MyAppState extends State<MyApp> {
         unselectedWidgetColor: const Color(0xFF13a8e1),
         checkboxTheme: CheckboxThemeData(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-          fillColor: MaterialStateColor.resolveWith(
+          fillColor: WidgetStateColor.resolveWith(
             (states) => const Color(0xFF13a8e1),
           ),
         ),
@@ -90,7 +98,7 @@ class _MyAppState extends State<MyApp> {
         ),
         radioTheme: RadioThemeData(
           fillColor:
-              MaterialStateColor.resolveWith((states) => Color(0xFF13a8e1)),
+              WidgetStateColor.resolveWith((states) => Color(0xFF13a8e1)),
         ), //
 // cursor color
         textSelectionTheme: const TextSelectionThemeData(
