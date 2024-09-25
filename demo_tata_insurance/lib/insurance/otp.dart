@@ -5,8 +5,6 @@ import 'package:otp_text_field/style.dart';
 
 import 'components/submit_button.dart';
 
-bool isChecked = false;
-
 class OTPValidation extends StatefulWidget {
   const OTPValidation({super.key});
 

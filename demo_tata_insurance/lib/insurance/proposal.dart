@@ -30,7 +30,7 @@ class _ProposalPageState extends State<ProposalPage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const CustomSteppper(currentStep: 3),
+                      const CustomStepper(currentStep: 3),
                       SizedBox(height: 40),
                       const Text(
                         "Proposal",

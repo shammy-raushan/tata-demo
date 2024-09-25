@@ -40,41 +40,23 @@ class _SelfSelectionState extends State<SelfSelection> {
             fit: BoxFit.cover,
           ),
         )),
-        Positioned(
-            top: 20,
-            left: 0,
-            right: 0,
-            child: Column(
-              children: [
-                const CustomSteppper(
-                  currentStep: 1,
-                ),
-                SizedBox(height: 14),
-                Image.asset(
-                  'assets/InsuredCouple.png',
-                  fit: BoxFit.cover,
-                ),
-              ],
-            )),
         Positioned.fill(
             child: SingleChildScrollView(
                 child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: EdgeInsets.only(left: 20, top: 23, right: 20, bottom: 20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const SizedBox(height: 217),
+              const CustomStepper(currentStep: 1),
+              Image.asset('assets/InsuredCouple.png', fit: BoxFit.cover),
               PhysicalModel(
                   color: Colors.white.withOpacity(0.9),
                   elevation: 1,
-                  // shadowColor: Colors.blue,
                   borderRadius: BorderRadius.circular(20),
                   child: Padding(
                       padding: const EdgeInsets.fromLTRB(20, 44, 20, 30),
                       child: Container(
-                          constraints: BoxConstraints(
-                            maxWidth: 350, // Set the maximum width here
-                          ),
+                          constraints: BoxConstraints(maxWidth: 350),
                           child: Form(
                               key: _formKey,
                               child: Column(
@@ -104,7 +86,7 @@ class _SelfSelectionState extends State<SelfSelection> {
                                     const SizedBox(height: 40),
                                     Padding(
                                         padding: EdgeInsets.symmetric(
-                                            horizontal: 45),
+                                            horizontal: 20),
                                         child: GradientButton(
                                             text: "Proceed",
                                             isDisabled: cardSel.isEmpty,
@@ -112,9 +94,8 @@ class _SelfSelectionState extends State<SelfSelection> {
                                               Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        TermSelection(),
-                                                  ));
+                                                      builder: (context) =>
+                                                          TermSelection()));
                                             })),
                                   ])))))
             ],

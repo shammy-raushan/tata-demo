@@ -26,3 +26,31 @@ String? validatePincode(String? value) {
   }
   return null;
 }
+
+String? validatePAN(String? value) {
+  if (value == null || value.isEmpty) {
+    return 'Please enter your PAN Number';
+  }
+
+  if (value.length != 10) {
+    return 'Enter a valid PAN.';
+  }
+
+  if (!RegExp(r'^[A-Z]{5}').hasMatch(value.substring(0, 5))) {
+    return 'Enter a valid PAN.';
+  }
+
+  if (value[3] != 'P') {
+    return 'PAN - 4th letter is not P - Enter a valid PAN.';
+  }
+
+  if (!RegExp(r'^\d{4}$').hasMatch(value.substring(5, 9))) {
+    return 'PAN - 6,7,8,9 places are not numbers - enter a valid PAN.';
+  }
+
+  if (RegExp(r'\d$').hasMatch(value[9])) {
+    return 'PAN - last character is not an alphabet; enter a valid PAN.';
+  }
+
+  return null;
+}

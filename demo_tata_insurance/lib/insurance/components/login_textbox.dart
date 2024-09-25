@@ -16,6 +16,7 @@ class LoginTextBox extends StatelessWidget {
   final bool readOnly;
   final Function()? onTap;
   final List<TextInputFormatter>? inputFormatters;
+  final TextCapitalization textCapitalization;
 
   LoginTextBox(
       {required this.labelText,
@@ -30,12 +31,15 @@ class LoginTextBox extends StatelessWidget {
       this.suffixIcon,
       this.readOnly = false,
       this.onTap,
-      this.inputFormatters});
+      this.inputFormatters,
+      this.textCapitalization = TextCapitalization.none});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 56,
+      constraints: BoxConstraints(
+        minHeight: 50.0, // Set your desired minimum height here
+      ),
       child: TextFormField(
         controller: controller,
         obscureText: obscureText,
@@ -46,6 +50,7 @@ class LoginTextBox extends StatelessWidget {
         readOnly: readOnly,
         onTap: onTap,
         inputFormatters: inputFormatters,
+        textCapitalization: textCapitalization,
         style: textStyle ??
             TextStyle(
               fontFamily: 'Inter',
