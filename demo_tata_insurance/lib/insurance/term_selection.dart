@@ -74,17 +74,6 @@ class _TermSelectionState extends State<TermSelection> {
           opacity: 0.04,
           child: Image.asset('assets/pattern.png', fit: BoxFit.cover),
         )),
-        Positioned(
-            top: 20,
-            left: 0,
-            right: 0,
-            child: Column(
-              children: [
-                const CustomSteppper(currentStep: 1),
-                SizedBox(height: 14),
-                Image.asset('assets/InsuredCouple.png', fit: BoxFit.cover),
-              ],
-            )),
         Positioned.fill(
           child: SingleChildScrollView(
             child: Padding(
@@ -92,7 +81,8 @@ class _TermSelectionState extends State<TermSelection> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  SizedBox(height: 217),
+                  const CustomStepper(currentStep: 1),
+                  Image.asset('assets/InsuredCouple.png', fit: BoxFit.cover),
                   PhysicalModel(
                     color: Color.fromARGB(244, 255, 255, 255),
                     elevation: 1,

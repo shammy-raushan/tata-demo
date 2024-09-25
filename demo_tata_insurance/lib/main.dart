@@ -1,12 +1,5 @@
 import 'package:demo_tata_insurance/insurance/home.dart';
-import 'package:demo_tata_insurance/insurance/self.dart';
-import 'package:demo_tata_insurance/insurance/term_selection.dart';
 import 'package:flutter/material.dart';
-import 'package:otp_text_field/otp_field.dart';
-
-import 'insurance/otp.dart';
-import 'insurance/profile_details.dart';
-import 'insurance/slider_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -65,13 +58,12 @@ class _MyAppState extends State<MyApp> {
         // ),
 
 // checkbox theme
-        unselectedWidgetColor: const Color(0xFF13a8e1),
+        unselectedWidgetColor: Colors.white,
         checkboxTheme: CheckboxThemeData(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-          fillColor: WidgetStateColor.resolveWith(
-            (states) => const Color(0xFF13a8e1),
-          ),
-        ),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+            checkColor: WidgetStateProperty.all(Colors.white),
+            fillColor: WidgetStateProperty.all(Colors.blue)),
 
         // title and subtitle fontSize and color
         listTileTheme: const ListTileThemeData(

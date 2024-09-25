@@ -1,54 +1,98 @@
 import 'package:flutter/material.dart';
 
-class ReadMoreText extends StatefulWidget {
+class ExpandableText extends StatefulWidget {
+  final ValueChanged<bool?>? onChanged;
   final bool isChecked;
-  final onChanged;
-  const ReadMoreText({super.key, required this.isChecked, this.onChanged});
+  final String fullText;
+
+  ExpandableText(
+      {required this.fullText,
+      required this.onChanged,
+      this.isChecked = false});
 
   @override
-  _ReadMoreTextState createState() => _ReadMoreTextState();
+  _ExpandableTextState createState() => _ExpandableTextState();
 }
 
-class _ReadMoreTextState extends State<ReadMoreText> {
+class _ExpandableTextState extends State<ExpandableText> {
   bool _isExpanded = false;
-
-  final String _fullText =
-      'I authorize the Bank and its representatives to Call, SMS or communicate via WhatsApp regarding my application. This is additional information that is revealed when the text is expanded. It provides further details about the application process and terms.';
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            constraints:
-                BoxConstraints(maxHeight: _isExpanded ? double.infinity : 40),
-            child: Text(
-              _fullText,
-              maxLines: _isExpanded ? null : 2,
-              overflow:
-                  _isExpanded ? TextOverflow.visible : TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: 11,
-                letterSpacing: 0.4,
-              ),
-            ),
-          ),
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                _isExpanded = !_isExpanded;
-              });
-            },
-            child: Text(
-              _isExpanded ? ' Read Less' : ' Read More',
-              style: TextStyle(
-                color: Colors.blue,
-                decoration: TextDecoration.underline,
-                fontSize: 11,
-              ),
+          Checkbox(value: widget.isChecked, onChanged: widget.onChanged),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    final textPainter = TextPainter(
+                      text: TextSpan(
+                        text: widget.fullText,
+                        style: TextStyle(
+                            fontSize: 11,
+                            letterSpacing: 0.4,
+                            color: Colors.black),
+                      ),
+                      maxLines: _isExpanded ? null : 2,
+                      textDirection: TextDirection.ltr,
+                    );
+
+                    textPainter.layout(maxWidth: constraints.maxWidth);
+
+                    final isOverflowing = textPainter.didExceedMaxLines;
+
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          constraints: BoxConstraints(
+                              maxHeight: _isExpanded ? double.infinity : 40),
+                          child: Text(
+                            widget.fullText,
+                            maxLines: _isExpanded ? null : 2,
+                            overflow: _isExpanded
+                                ? TextOverflow.visible
+                                : TextOverflow.ellipsis,
+                            style: TextStyle(fontSize: 11, letterSpacing: 0.4),
+                          ),
+                        ),
+                        if (isOverflowing && !_isExpanded)
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _isExpanded = true;
+                              });
+                            },
+                            child: Text(
+                              ' Read More',
+                              style:
+                                  TextStyle(color: Colors.blue, fontSize: 11),
+                            ),
+                          ),
+                        if (_isExpanded)
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _isExpanded = false;
+                              });
+                            },
+                            child: Text(
+                              ' Read Less',
+                              style:
+                                  TextStyle(color: Colors.blue, fontSize: 11),
+                            ),
+                          ),
+                      ],
+                    );
+                  },
+                ),
+              ],
             ),
           ),
         ],

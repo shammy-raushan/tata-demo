@@ -37,7 +37,7 @@ class _NomineeDetailsState extends State<NomineeDetails> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const CustomSteppper(currentStep: 3),
+                const CustomStepper(currentStep: 3),
                 SizedBox(height: 30),
                 Card(
                   elevation: 8,

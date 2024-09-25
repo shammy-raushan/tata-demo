@@ -1,10 +1,9 @@
 import 'package:demo_tata_insurance/insurance/components/login_textbox.dart';
-import 'package:demo_tata_insurance/insurance/otp.dart';
+import 'package:demo_tata_insurance/insurance/components/read_more_text.dart';
 import 'package:flutter/material.dart';
 
 import 'components/submit_button.dart';
-
-bool isChecked = false;
+import 'otp.dart';
 
 class TataLogin extends StatefulWidget {
   const TataLogin({super.key});
@@ -15,9 +14,7 @@ class TataLogin extends StatefulWidget {
 
 class _TataLoginState extends State<TataLogin> {
   final _formKey = GlobalKey<FormState>();
-  bool? check1 = false;
-  bool? check2 = false;
-  bool _value = false;
+  bool _isChecked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -85,33 +82,17 @@ class _TataLoginState extends State<TataLogin> {
                               keyboardType: TextInputType.phone,
                               maxLength: 10,
                             ),
-                            const SizedBox(height: 28),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Checkbox(
-                                  value: _value,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _value = value!;
-                                    });
-                                  },
-                                ),
-                                Expanded(
-                                  child: const Text(
-                                    "I authorise TAGIC and its representatives to Call, SMS or communicate via WhatsApp regarding my application.  Read more",
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                )
-                              ],
+                            const SizedBox(height: 25),
+                            ExpandableText(
+                              isChecked: _isChecked,
+                              onChanged: _onCheckboxChanged,
+                              fullText:
+                                  'I authorise TAGIC and its representatives to Call, SMS or communicate via WhatsApp regarding my application.',
                             ),
                             const SizedBox(height: 20),
                             GradientButton(
                               onPressed: _submitForm,
-                              isDisabled: !_value,
+                              isDisabled: !_isChecked,
                               text: 'Next',
                             ),
                           ],
@@ -135,6 +116,12 @@ class _TataLoginState extends State<TataLogin> {
         ),
       );
     }
+  }
+
+  void _onCheckboxChanged(bool? value) {
+    setState(() {
+      _isChecked = value ?? false;
+    });
   }
 
   String? _validateMobileNumber(String? value) {

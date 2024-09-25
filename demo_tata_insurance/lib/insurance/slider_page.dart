@@ -50,7 +50,7 @@ class _planspageState extends State<planspage> {
                     child: Column(
                       children: [
                         SizedBox(height: 10),
-                        const CustomSteppper(currentStep: 2),
+                        const CustomStepper(currentStep: 2),
                         const SizedBox(height: 20),
                         const Text(
                           "Our recommended plan\nfor you",
@@ -214,7 +214,7 @@ class _planspageState extends State<planspage> {
 
 class _TermsSlider extends StatefulWidget {
   final int currentStep;
-  const _TermsSlider({super.key, required this.currentStep});
+  const _TermsSlider({required this.currentStep});
 
   @override
   State<_TermsSlider> createState() => __TermsSliderState();
