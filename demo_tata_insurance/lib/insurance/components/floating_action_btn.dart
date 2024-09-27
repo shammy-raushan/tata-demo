@@ -7,7 +7,7 @@ class FloatingActionBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionButton(
       onPressed: () {},
-      child: Image.asset("icons/call.png"),
+      child: Image.asset("assets/call.png"),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
       ),
