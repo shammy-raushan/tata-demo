@@ -242,7 +242,7 @@ class TermSearchTextField extends StatelessWidget {
             onTap: onTap,
             child: Padding(
               padding: const EdgeInsets.only(right: 8),
-              child: Image.asset('icons/search.png'),
+              child: Image.asset('assets/search.png'),
             ),
           ),
           contentPadding: EdgeInsets.symmetric(horizontal: 12.0),

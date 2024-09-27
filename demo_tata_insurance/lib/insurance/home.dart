@@ -82,16 +82,16 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 SizedBox(height: 4),
                                 CircularImageWithText(
-                                    image: "icons/description.png",
+                                    image: "assets/description.png",
                                     boldText: '5 cr + ',
                                     normalText:
                                         'customers serviced since inception'),
                                 CircularImageWithText(
-                                    image: "icons/rupee.png",
+                                    image: "assets/rupee.png",
                                     boldText: '96.70% ',
                                     normalText: 'claims paid'),
                                 CircularImageWithText(
-                                    image: "icons/police.png",
+                                    image: "assets/police.png",
                                     boldText: '11000 + ',
                                     normalText: 'cashless hospitals'),
                                 SizedBox(height: 50),
