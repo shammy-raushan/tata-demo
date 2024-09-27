@@ -1,19 +1,23 @@
 // / ignore_for_file: file_names
 
-import 'package:demo_tata_insurance/insurance/healthOverview/health_overview.dart';
 import 'package:flutter/material.dart';
 
+import '../utils/utils.dart';
 import 'components/submit_button.dart';
+import 'plan_addons.dart';
+import 'plan_details.dart';
 
 class PlanTile extends StatelessWidget {
   final int index;
   final int currentStep;
+  final bool goback;
   final Map<String, dynamic> planData;
   const PlanTile(
       {super.key,
       required this.index,
       required this.planData,
-      required this.currentStep});
+      required this.currentStep,
+      required this.goback});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +35,7 @@ class PlanTile extends StatelessWidget {
       ),
       child: Column(
         children: [
-          (index == 2)
+          (index == 1)
               ? Container(
                   width: double.infinity,
                   height: 51,
@@ -67,10 +71,7 @@ class PlanTile extends StatelessWidget {
 
           Text(
             planData['title'],
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w600,
-            ),
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
           ),
 
           const SizedBox(height: 20),
@@ -94,39 +95,56 @@ class PlanTile extends StatelessWidget {
           ),
 
           //Search Policy Bar
-          TermSearchTextField(),
+          TermSearchTextField(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PlanDetails(index: index),
+                  ),
+                );
+              },
+              labelText: 'Search within the policy',
+              hintText: "What's not included"),
           Text(
             currentStep == 0
-                ? planData['amountYearly']
-                : planData['amountMonthly'],
+                ? "${formatCurrency(planData["amountYearly"])}/year incl GST"
+                : "${formatCurrency(planData['amountMonthly'])}/month incl GST",
             style: TextStyle(
-              fontSize: 24,
+              fontSize: 20,
               fontWeight: FontWeight.w600,
             ),
           ),
 
           //Hyperlink
           SizedBox(height: 25),
-          Text(
-            'View Plan Details',
-            style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: Colors.blue.shade900),
+          GestureDetector(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PlanDetails(index: index),
+              ),
+            ),
+            child: Text(
+              'View Plan Details',
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.blue.shade900),
+            ),
           ),
 
-          //Apply Now Button
           SizedBox(height: 25),
 
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: GradientButton(
               onPressed: () {
+                storeValue('selectedPlan', index.toString());
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => HealthOverview(),
-                  ),
+                      builder: (context) => PlanAddons(goback: goback)),
                 );
               },
               text: 'Apply Now',
@@ -147,7 +165,7 @@ class PlanChip extends StatelessWidget {
     return Align(
       alignment: Alignment.topLeft,
       child: Container(
-        margin: const EdgeInsets.only(left: 10, bottom: 10),
+        margin: const EdgeInsets.only(left: 10, bottom: 10, right: 20),
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
         decoration: BoxDecoration(
           border: Border.all(
@@ -166,9 +184,11 @@ class PlanChip extends StatelessWidget {
               color: const Color.fromARGB(255, 9, 56, 127),
             ),
             SizedBox(width: 6),
-            Text(
-              title,
-              style: TextStyle(color: Colors.blueAccent, fontSize: 12),
+            Expanded(
+              child: Text(
+                title,
+                style: TextStyle(color: Colors.blueAccent, fontSize: 12),
+              ),
             ),
           ],
         ),
@@ -178,7 +198,11 @@ class PlanChip extends StatelessWidget {
 }
 
 class TermSearchTextField extends StatelessWidget {
-  const TermSearchTextField({super.key});
+  final String? hintText;
+  final String labelText;
+  final GestureTapCallback onTap;
+  const TermSearchTextField(
+      {super.key, required this.onTap, this.hintText, required this.labelText});
 
   @override
   Widget build(BuildContext context) {
@@ -189,7 +213,8 @@ class TermSearchTextField extends StatelessWidget {
       child: TextField(
         onChanged: null,
         decoration: InputDecoration(
-          labelText: 'Search within the policy',
+          labelText: labelText,
+          hintText: hintText,
           labelStyle: TextStyle(
             fontSize: 12.0,
             color: Color(0xFF686873),
@@ -213,9 +238,12 @@ class TermSearchTextField extends StatelessWidget {
               width: 0.5,
             ),
           ),
-          prefixIcon: Icon(
-            Icons.search,
-            size: 24.0,
+          prefixIcon: GestureDetector(
+            onTap: onTap,
+            child: Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: Image.asset('icons/search.png'),
+            ),
           ),
           contentPadding: EdgeInsets.symmetric(horizontal: 12.0),
         ),

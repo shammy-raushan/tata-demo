@@ -2,6 +2,8 @@ import 'package:demo_tata_insurance/insurance/components/login_textbox.dart';
 import 'package:demo_tata_insurance/insurance/components/read_more_text.dart';
 import 'package:flutter/material.dart';
 
+import '../utils/utils.dart';
+import 'components/floating_action_btn.dart';
 import 'components/submit_button.dart';
 import 'otp.dart';
 
@@ -15,28 +17,33 @@ class TataLogin extends StatefulWidget {
 class _TataLoginState extends State<TataLogin> {
   final _formKey = GlobalKey<FormState>();
   bool _isChecked = false;
+  String mobileNumber = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadMobileNumber();
+  }
+
+  Future<void> _loadMobileNumber() async {
+    mobileNumber = await loadStoredValue('mobileNumber');
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Color(0xFFF5F5F5),
         appBar: AppBar(
-          title: Image.asset(
-            'assets/tata-logo.png',
-            width: 100,
-            height: 60,
-          ),
+          title: Image.asset('assets/tata-logo.png', width: 100, height: 60),
         ),
         body: Stack(children: <Widget>[
           Positioned(
             top: 0,
             left: -62,
             right: 0,
-            child: Image.asset(
-              'assets/banner.png',
-              fit: BoxFit.cover,
-              height: 350,
-            ),
+            child: Image.asset('assets/banner.png',
+                fit: BoxFit.cover, height: 350),
           ),
           Positioned.fill(
               child: SingleChildScrollView(
@@ -81,6 +88,9 @@ class _TataLoginState extends State<TataLogin> {
                               validator: _validateMobileNumber,
                               keyboardType: TextInputType.phone,
                               maxLength: 10,
+                              onChanged: (value) {
+                                mobileNumber = value;
+                              },
                             ),
                             const SizedBox(height: 25),
                             ExpandableText(
@@ -104,11 +114,13 @@ class _TataLoginState extends State<TataLogin> {
               ),
             ]),
           ))
-        ]));
+        ]),
+        floatingActionButton: FloatingActionBtn());
   }
 
-  void _submitForm() {
+  Future<void> _submitForm() async {
     if (_formKey.currentState!.validate()) {
+      storeValue('mobileNumber', mobileNumber);
       Navigator.push(
         context,
         MaterialPageRoute(

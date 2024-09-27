@@ -13,7 +13,7 @@ class _CustomStepperState extends State<CustomStepper> {
   List<String> _labels = [
     'Profile',
     'Plan',
-    'Proposal',
+    'Application',
     'Payment',
   ];
   @override
@@ -35,7 +35,11 @@ class _CustomStepperState extends State<CustomStepper> {
                   width: 80,
                   height: 10,
                   child: LinearProgressIndicator(
-                    value: step <= widget.currentStep ? widget.progress : 0.0,
+                    value: step == widget.currentStep
+                        ? widget.progress
+                        : step < widget.currentStep
+                            ? 1
+                            : 0,
                     backgroundColor: Color(0xFFC9C9C9),
                     valueColor: AlwaysStoppedAnimation<Color>(
                       Color(0xFF00AE4E),

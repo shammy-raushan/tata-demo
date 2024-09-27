@@ -188,21 +188,23 @@ class CircularImageWithText extends StatelessWidget {
         children: [
           CircularImage(image: image),
           SizedBox(width: 15),
-          RichText(
-            text: TextSpan(
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                color: Colors.black,
-              ),
-              children: <TextSpan>[
-                TextSpan(
-                    text: boldText,
-                    style: TextStyle(fontWeight: FontWeight.w700)),
-                TextSpan(
-                  text: normalText,
+          Expanded(
+            child: RichText(
+              text: TextSpan(
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.black,
                 ),
-              ],
+                children: <TextSpan>[
+                  TextSpan(
+                      text: boldText,
+                      style: TextStyle(fontWeight: FontWeight.w700)),
+                  TextSpan(
+                    text: normalText,
+                  ),
+                ],
+              ),
             ),
           ),
         ],

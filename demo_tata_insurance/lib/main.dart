@@ -1,5 +1,13 @@
 import 'package:demo_tata_insurance/insurance/home.dart';
+import 'package:demo_tata_insurance/insurance/nominee.dart';
+import 'package:demo_tata_insurance/insurance/plan_addons.dart';
+import 'package:demo_tata_insurance/insurance/proposal.dart';
+import 'package:demo_tata_insurance/insurance/self.dart';
 import 'package:flutter/material.dart';
+
+import 'insurance/login.dart';
+import 'insurance/term_selection.dart';
+import 'utils/prefs_service.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,6 +21,17 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final PrefsService _prefsService = PrefsService();
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   clearPrefs();
+  // }
+
+  Future<void> clearPrefs() async {
+    await _prefsService.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -57,13 +76,26 @@ class _MyAppState extends State<MyApp> {
         //       foregroundColor: Color.fromRGBO(255, 31, 41, 1)),
         // ),
 
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          backgroundColor: Color(0xFF2B62AA),
+          foregroundColor: Colors.white,
+          elevation: 6,
+        ),
+
 // checkbox theme
         unselectedWidgetColor: Colors.white,
         checkboxTheme: CheckboxThemeData(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-            checkColor: WidgetStateProperty.all(Colors.white),
-            fillColor: WidgetStateProperty.all(Colors.blue)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+          checkColor: WidgetStateProperty.all(Colors.white),
+          fillColor: WidgetStateProperty.resolveWith<Color?>(
+            (Set<WidgetState> states) {
+              if (states.contains(WidgetState.selected)) {
+                return Color(0xFF2B62AA);
+              }
+              return null;
+            },
+          ),
+        ),
 
         // title and subtitle fontSize and color
         listTileTheme: const ListTileThemeData(

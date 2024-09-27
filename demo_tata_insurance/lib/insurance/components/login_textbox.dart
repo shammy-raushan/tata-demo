@@ -17,6 +17,8 @@ class LoginTextBox extends StatelessWidget {
   final Function()? onTap;
   final List<TextInputFormatter>? inputFormatters;
   final TextCapitalization textCapitalization;
+  final String? initialValue;
+  final Function(String)? onChanged;
 
   LoginTextBox(
       {required this.labelText,
@@ -32,7 +34,9 @@ class LoginTextBox extends StatelessWidget {
       this.readOnly = false,
       this.onTap,
       this.inputFormatters,
-      this.textCapitalization = TextCapitalization.none});
+      this.textCapitalization = TextCapitalization.none,
+      this.initialValue,
+      this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +55,8 @@ class LoginTextBox extends StatelessWidget {
         onTap: onTap,
         inputFormatters: inputFormatters,
         textCapitalization: textCapitalization,
+        initialValue: initialValue,
+        onChanged: onChanged,
         style: textStyle ??
             TextStyle(
               fontFamily: 'Inter',

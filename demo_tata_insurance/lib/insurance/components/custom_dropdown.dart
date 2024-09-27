@@ -1,28 +1,34 @@
 import 'package:flutter/material.dart';
 
-class GenderDropdown extends StatefulWidget {
+class CustomDropdown extends StatefulWidget {
   final String label;
+  final String? hintTitle;
   final String? initialValue;
-  final Function(String) onGenderSelected;
+  final List<String> items;
+  final Function(String) onSelected;
 
-  const GenderDropdown({
+  const CustomDropdown({
     Key? key,
     required this.label,
     this.initialValue,
-    required this.onGenderSelected,
+    required this.onSelected,
+    this.hintTitle,
+    required this.items,
   }) : super(key: key);
 
   @override
-  _GenderDropdownState createState() => _GenderDropdownState();
+  _CustomDropdownState createState() => _CustomDropdownState();
 }
 
-class _GenderDropdownState extends State<GenderDropdown> {
+class _CustomDropdownState extends State<CustomDropdown> {
   String? selectedGender;
+  List<String> items = [];
 
   @override
   void initState() {
     super.initState();
     selectedGender = widget.initialValue;
+    items = widget.items;
   }
 
   @override
@@ -32,14 +38,22 @@ class _GenderDropdownState extends State<GenderDropdown> {
       children: <Widget>[
         DropdownButtonFormField<String>(
           value: selectedGender,
-          hint: Text(
-            'Select Gender',
-            style: TextStyle(
-              color: Color(0xFF787878),
-              fontSize: 14,
-            ),
-          ),
+          hint: widget.hintTitle != null
+              ? Text(
+                  widget.hintTitle ?? '',
+                  style: TextStyle(
+                    color: Color(0xFF787878),
+                    fontSize: 14,
+                  ),
+                )
+              : null,
           isExpanded: true,
+          validator: (value) {
+            if (value == null) {
+              return 'Please select ${widget.label}';
+            }
+            return null;
+          },
           decoration: InputDecoration(
             labelText: widget.label,
             labelStyle: TextStyle(color: Color(0xFF787878), fontSize: 14),
@@ -68,19 +82,20 @@ class _GenderDropdownState extends State<GenderDropdown> {
             filled: true,
             fillColor: Colors.white,
           ),
-          items: <String>['Male', 'Female', 'Other']
-              .map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
+          items: items.length > 0
+              ? items.map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList()
+              : null,
           onChanged: (String? newValue) {
             setState(() {
               selectedGender = newValue;
             });
             if (newValue != null) {
-              widget.onGenderSelected(newValue);
+              widget.onSelected(newValue);
             }
           },
         ),
