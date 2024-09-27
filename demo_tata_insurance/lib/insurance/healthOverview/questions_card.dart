@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../../utils/utils.dart';
 import 'custon_text_button.dart';
 import 'pre_existing_diseases.dart';
-import 'sample_values.dart';
+import '../../utils/sample_values.dart';
 
 class QuestionsCard extends StatefulWidget {
   final Map<String, dynamic> data;
@@ -18,6 +19,22 @@ class _QuestionsCardState extends State<QuestionsCard> {
   List<int> _selectedDisease = [];
   List<int> _selectedMedicaHistory = [];
   Map<String, String?> _selectedSubstance = {};
+
+  @override
+  void initState() {
+    super.initState();
+    _loadDetails();
+  }
+
+  Future<void> _loadDetails() async {
+    try {
+      _selectedOption = await loadStoredValue(widget.data['key']);
+      _selectedOption = _selectedOption == "Yes" ? "Yes" : "No";
+      setState(() {});
+    } catch (e) {
+      print(e);
+    }
+  }
 
   Future<void> _showGridBottomSheet(BuildContext context) async {
     final selectedItems = await showModalBottomSheet<dynamic>(
@@ -77,6 +94,7 @@ class _QuestionsCardState extends State<QuestionsCard> {
 
   void _handlePress(String option) {
     setState(() {
+      storeValue(widget.data['key'], option);
       _selectedOption = option;
     });
     if (option == 'Yes' && widget.index != 2) {
@@ -104,7 +122,7 @@ class _QuestionsCardState extends State<QuestionsCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CircularCard(imageUrl: ''),
+                CircularCard(imageUrl: widget.data['imageUrl']),
                 if (widget.index == 0 && _selectedDisease.isNotEmpty)
                   _getEditIcon(),
                 if (widget.index == 1 && _selectedMedicaHistory.isNotEmpty)
@@ -147,7 +165,7 @@ class _QuestionsCardState extends State<QuestionsCard> {
         return Wrap(
           spacing: 8.0,
           children: _selectedDisease.map((index) {
-            return CustomChip(text: disease[index]['disease']);
+            return _CustomChip(text: disease[index]['disease']);
           }).toList(),
         );
       }
@@ -156,7 +174,7 @@ class _QuestionsCardState extends State<QuestionsCard> {
         return Wrap(
           spacing: 8.0,
           children: _selectedMedicaHistory.map((index) {
-            return CustomChip(text: medicalHistory[index]);
+            return _CustomChip(text: medicalHistory[index]);
           }).toList(),
         );
       }
@@ -165,7 +183,7 @@ class _QuestionsCardState extends State<QuestionsCard> {
         return Wrap(
           spacing: 8.0,
           children: _selectedSubstance.entries.map((entry) {
-            return CustomChip(text: '${entry.key}');
+            return _CustomChip(text: '${entry.key}');
           }).toList(),
         );
       }
@@ -215,15 +233,9 @@ class CircularCard extends StatelessWidget {
             blurRadius: 8.0,
           ),
         ],
-        image: imageUrl.isNotEmpty
-            ? DecorationImage(
-                image: NetworkImage(imageUrl),
-                fit: BoxFit.cover,
-              )
-            : null,
       ),
       child: imageUrl.isNotEmpty
-          ? null
+          ? Image.asset(imageUrl, width: 24, height: 24)
           : Center(
               child: Icon(
                 Icons.heat_pump_rounded,
@@ -235,9 +247,9 @@ class CircularCard extends StatelessWidget {
   }
 }
 
-class CustomChip extends StatelessWidget {
+class _CustomChip extends StatelessWidget {
   final String text;
-  const CustomChip({super.key, required this.text});
+  const _CustomChip({super.key, required this.text});
 
   @override
   Widget build(BuildContext context) {

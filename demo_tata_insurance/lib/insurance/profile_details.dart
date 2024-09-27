@@ -1,18 +1,25 @@
-import 'package:demo_tata_insurance/insurance/components/gender_dropdown.dart';
+import 'dart:convert';
+
+import 'package:demo_tata_insurance/insurance/components/custom_dropdown.dart';
 import 'package:demo_tata_insurance/insurance/components/login_textbox.dart';
+import 'package:demo_tata_insurance/insurance/proposal.dart';
 import 'package:demo_tata_insurance/insurance/self.dart';
 import 'package:demo_tata_insurance/utils/validations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../utils/utils.dart';
 import 'components/custom_date_picker.dart';
 import 'components/custom_stepper.dart';
+import 'components/floating_action_btn.dart';
 import 'components/read_more_text.dart';
 import 'components/submit_button.dart';
+import 'pan_profile_details.dart';
 
 class ProfileDetails extends StatefulWidget {
-  const ProfileDetails({super.key});
+  final bool goback;
+  const ProfileDetails({super.key, this.goback = false});
 
   @override
   State<ProfileDetails> createState() => _ProfileDetailsState();
@@ -22,7 +29,38 @@ class _ProfileDetailsState extends State<ProfileDetails> {
   final _formKey = GlobalKey<FormState>();
   bool _isChecked = false;
   String selectedOption = '1';
+  String panNumber = '';
+  String? name;
+  String pincode = "";
+  String? gender;
+  String? dob;
+  DateTime? selectedDate;
   bool _obscureText = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadvalues();
+  }
+
+  Future<void> _loadvalues() async {
+    try {
+      selectedOption = await loadStoredValue('panSeletedOption');
+      panNumber = await loadStoredValue('panNumber');
+      pincode = await loadStoredValue('pincode');
+      var profile = await loadStoredValue('profile');
+      if (profile.isNotEmpty) {
+        var _profile = jsonDecode(profile);
+        name = _profile['name'];
+        gender = _profile['gender'];
+        dob = _profile['dob'];
+        selectedDate = DateTime.parse(_profile['selectedDate']!);
+      }
+      setState(() {});
+    } catch (e) {
+      print(e);
+    }
+  }
 
   void _togglePasswordVisibility() {
     setState(() {
@@ -60,7 +98,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                     CustomStepper(currentStep: 1),
                     SvgPicture.asset('assets/KycForm.svg'),
                     PhysicalModel(
-                      color: Colors.white.withOpacity(0.91),
+                      color: Color.fromARGB(244, 255, 255, 255),
                       elevation: 8,
                       borderRadius: BorderRadius.circular(12),
                       child: Padding(
@@ -150,6 +188,14 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                                 (selectedOption == '2')
                                     ? _WithoutPAN(
                                         onGenderSelected: _onGenderSelected,
+                                        onDOBSelected: _onDOBSelected,
+                                        onPincodeChanged: onPincodeChanged,
+                                        onNameChanged: _onNameChanged,
+                                        name: name ?? '',
+                                        gender: gender ?? '',
+                                        dob: dob ?? '',
+                                        pincode: pincode,
+                                        selectedDate: selectedDate,
                                       )
                                     : Column(
                                         children: [
@@ -157,6 +203,9 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                                             labelText: "PAN Number",
                                             obscureText: _obscureText,
                                             validator: validatePAN,
+                                            onChanged: (value) {
+                                              panNumber = value;
+                                            },
                                             inputFormatters: [
                                               FilteringTextInputFormatter.allow(
                                                   RegExp('[A-Z0-9]')),
@@ -208,17 +257,36 @@ class _ProfileDetailsState extends State<ProfileDetails> {
               ),
             ),
           ),
-        ]));
+        ]),
+        floatingActionButton: FloatingActionBtn());
   }
 
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => SelfSelection(),
-        ),
-      );
+      storeValue('panSeletedOption', selectedOption);
+      storeValue('panNumber', panNumber);
+      storeValue('pincode', pincode);
+      final _profile = {
+        'name': name ?? 'Nisarg Garg',
+        'gender': gender ?? 'Male',
+        'dob': dob ?? '01/05/1988',
+        'selectedDate': selectedDate.toString(),
+      };
+      storeValue('profile', jsonEncode(_profile));
+
+      widget.goback
+          ? Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => ProposalPage()),
+            )
+          : Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => (selectedOption == '2')
+                    ? SelfSelection()
+                    : PanProfileDetails(),
+              ),
+            );
     }
   }
 
@@ -228,14 +296,44 @@ class _ProfileDetailsState extends State<ProfileDetails> {
     });
   }
 
-  void _onGenderSelected(String gender) {
-    print('Selected gender: $gender');
+  void _onGenderSelected(String value) {
+    gender = value;
+  }
+
+  void _onDOBSelected(DateTime dob, String fornattedValue) {
+    selectedDate = dob;
+    this.dob = fornattedValue;
+  }
+
+  void onPincodeChanged(String value) {
+    pincode = value;
+  }
+
+  void _onNameChanged(String value) {
+    name = value;
   }
 }
 
 class _WithoutPAN extends StatelessWidget {
   final Function(String) onGenderSelected;
-  const _WithoutPAN({required this.onGenderSelected});
+  final Function(String) onPincodeChanged;
+  final Function(String) onNameChanged;
+  final Function(DateTime, String) onDOBSelected;
+  final String name;
+  final String gender;
+  final String dob;
+  final String pincode;
+  final DateTime? selectedDate;
+  const _WithoutPAN(
+      {required this.onGenderSelected,
+      required this.onDOBSelected,
+      required this.onPincodeChanged,
+      required this.onNameChanged,
+      required this.name,
+      required this.gender,
+      required this.dob,
+      required this.pincode,
+      required this.selectedDate});
 
   @override
   Widget build(BuildContext context) {
@@ -245,29 +343,36 @@ class _WithoutPAN extends StatelessWidget {
         LoginTextBox(
           labelText: "Full Name",
           validator: (value) => validateString(value, 'Please enter your name'),
+          onChanged: onNameChanged,
+          initialValue: name,
         ),
         const SizedBox(height: 24),
         CustomDatePicker(
-          label: 'Enter date of birth',
-          onDateSelected: (date) {
-            print(date);
-          },
+          label: 'Select date of birth',
+          onDateSelected: onDOBSelected,
           validate: (value) =>
               validateString(value, 'Please select your date of birth'),
+          initialDate: selectedDate,
         ),
         const SizedBox(height: 24),
-        GenderDropdown(
-            label: 'Gender',
-            onGenderSelected: onGenderSelected,
-            initialValue: "Male"),
+        CustomDropdown(
+          label: 'Gender',
+          onSelected: onGenderSelected,
+          hintTitle: 'Select Gender',
+          initialValue: gender.isEmpty ? "Male" : gender,
+          items: ['Male', 'Female', 'Other'],
+        ),
         const SizedBox(height: 24),
         LoginTextBox(
+          maxLength: 6,
+          onChanged: onPincodeChanged,
           labelText: "Pincode of where you live",
           keyboardType: TextInputType.number,
           inputFormatters: <TextInputFormatter>[
             FilteringTextInputFormatter.digitsOnly,
           ],
           validator: validatePincode,
+          initialValue: pincode,
         ),
         Text('The above pincode will be considered for quote generation',
             style: TextStyle(fontSize: 11, color: Color(0xFF787878))),

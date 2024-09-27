@@ -12,7 +12,8 @@ import 'components/custom_stepper.dart';
 enum ProductType { Gold, Silver, Dimond, Blank }
 
 class TermSelection extends StatefulWidget {
-  const TermSelection({super.key});
+  final bool goback;
+  const TermSelection({super.key, this.goback = false});
 
   @override
   State<TermSelection> createState() => _TermSelectionState();
@@ -56,17 +57,36 @@ class _TermSelectionState extends State<TermSelection> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    _loadDetails();
+  }
+
+  Future<void> _loadDetails() async {
+    try {
+      var termAmount = await loadStoredValue('termAmount');
+      var termTenure = await loadStoredValue('termTenure');
+      if (termAmount.isNotEmpty)
+        selectAmount = int.parse(termAmount);
+      else
+        await storeValue('termAmount', '5000000');
+      if (termTenure.isNotEmpty)
+        tenure = double.parse(termTenure);
+      else
+        await storeValue('termTenure', '1');
+      setState(() {});
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Image.asset('assets/tata-logo.png', width: 100, height: 60),
         automaticallyImplyLeading: false,
-        actions: const <Widget>[
-          Icon(Icons.pin_drop),
-          Text("New Delhi",
-              style: TextStyle(fontSize: 16, color: Colors.black)),
-          SizedBox(width: 15),
-        ],
+        actions: const <Widget>[],
       ),
       body: Stack(children: <Widget>[
         Positioned.fill(
@@ -147,7 +167,8 @@ class _TermSelectionState extends State<TermSelection> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => planspage(),
+                                      builder: (context) =>
+                                          planspage(goback: widget.goback),
                                     ),
                                   );
                                 }),
@@ -168,12 +189,14 @@ class _TermSelectionState extends State<TermSelection> {
   }
 
   void onTermAmountSelected(dynamic amount) {
+    storeValue('termAmount', amount.toInt().toString());
     setState(() {
       selectAmount = amount.toInt();
     });
   }
 
   void onTermTenureSelected(double amount) {
+    storeValue('termTenure', amount.toString());
     setState(() {
       tenure = amount;
     });
@@ -250,7 +273,7 @@ class AmountSlider extends StatelessWidget {
                     fontWeight: FontWeight.w400,
                   )),
               Text(
-                  'INR ${formatCurrency((selectAmount > 0) ? selectAmount : 1000000)}',
+                  '${formatCurrency((selectAmount > 0) ? selectAmount : 1000000)}',
                   style: TextStyle(
                     fontSize: 14,
                     color: Color(0xFF666666),
@@ -284,13 +307,13 @@ class AmountSlider extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('INR ${formatCurrency(50000)}',
+              Text('${formatCurrency(50000)}',
                   style: TextStyle(
                     fontSize: 13,
                     color: Color(0xFF666666),
                     fontWeight: FontWeight.w400,
                   )),
-              Text('INR ${formatCurrency(10000000)}',
+              Text('${formatCurrency(10000000)}',
                   style: TextStyle(
                     fontSize: 13,
                     color: Color(0xFF666666),
@@ -378,13 +401,13 @@ class TenureSlider extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('6 months',
+              Text('1 year',
                   style: TextStyle(
                     fontSize: 13,
                     color: Color(0xFF666666),
                     fontWeight: FontWeight.w400,
                   )),
-              Text('7 Years',
+              Text('7 years',
                   style: TextStyle(
                     fontSize: 13,
                     color: Color(0xFF666666),
@@ -399,11 +422,10 @@ class TenureSlider extends StatelessWidget {
           runSpacing: 24.0,
           children: termYears.asMap().entries.map((entry) {
             var option = entry.value;
-            return TermChip(
+            return TenureChip(
               option: option,
               isSelected: selectYear == option['value'],
               onTermAmountSelected: (value) => onYearSelected(value.toDouble()),
-              prefix: '₹ ',
             );
           }).toList(),
         ),
@@ -454,17 +476,57 @@ class TermChip extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text('${prefix}${option['label']}',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.w600,
-                        )),
+                        style: TextStyle(color: Colors.black, fontSize: 14.0)),
                   ],
                 ),
               ),
             ),
           ],
         ));
+  }
+}
+
+class TenureChip extends StatelessWidget {
+  final Map<String, dynamic> option;
+  final bool isSelected;
+  final Function(int) onTermAmountSelected;
+  final String prefix;
+  const TenureChip(
+      {super.key,
+      required this.option,
+      required this.isSelected,
+      required this.onTermAmountSelected,
+      this.prefix = ''});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        onTermAmountSelected(option['value']);
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(top: 8.0),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8.0),
+            border: isSelected
+                ? Border.all(color: Color(0xFF2B62AA), width: 1)
+                : null,
+            color: isSelected ? Color(0xFF2B62AA) : Colors.white,
+          ),
+          padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('${prefix}${option['label']}',
+                  style: TextStyle(
+                      color: isSelected ? Colors.white : Colors.black,
+                      fontSize: 14.0)),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -596,10 +658,10 @@ class _unsureWidget extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                      padding: const EdgeInsets.only(left: 60.0),
+                      padding: const EdgeInsets.only(left: 20.0),
                       child: SvgPicture.asset(
                         'assets/KycForm.svg',
-                        width: 60,
+                        width: 80,
                       )),
                 ],
               ),

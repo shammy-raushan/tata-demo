@@ -7,7 +7,7 @@ class CustomDatePicker extends StatefulWidget {
   final String label;
   final DateTime? initialDate;
   final FormFieldValidator<String>? validate;
-  final Function(DateTime) onDateSelected;
+  final Function(DateTime, String) onDateSelected;
 
   const CustomDatePicker({
     Key? key,
@@ -28,6 +28,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
   @override
   void initState() {
     super.initState();
+    _controller.text = "";
     if (widget.initialDate != null) {
       selectedDate = widget.initialDate;
       _controller.text = _formatDate(selectedDate);
@@ -38,7 +39,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: selectedDate ?? DateTime.now(),
-      firstDate: DateTime(2000),
+      firstDate: DateTime(1900),
       lastDate: DateTime(2101),
     );
     if (picked != null && picked != selectedDate) {
@@ -46,7 +47,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
         selectedDate = picked;
         _controller.text = _formatDate(selectedDate);
       });
-      widget.onDateSelected(picked);
+      widget.onDateSelected(picked, _formatDate(selectedDate));
     }
   }
 
