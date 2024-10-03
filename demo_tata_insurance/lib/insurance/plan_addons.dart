@@ -86,6 +86,7 @@ class _PlanAddonsState extends State<PlanAddons> {
                                 int index = entry.key;
                                 return AddOnsCard(
                                     index: index,
+                                    data: planAddons[index],
                                     isChecked: selectedCards.contains(index),
                                     onChanged: onCardSelected);
                               }).toList(),
@@ -95,7 +96,7 @@ class _PlanAddonsState extends State<PlanAddons> {
           Positioned(
             bottom: 0,
             child: Container(
-                padding: EdgeInsets.all(20),
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                   color: Color(0xFFE7EEFB),
@@ -116,7 +117,7 @@ class _PlanAddonsState extends State<PlanAddons> {
                             fontSize: 16,
                             fontWeight: FontWeight.w700,
                             color: Color(0xFF2B62AA))),
-                    SizedBox(height: 24),
+                    SizedBox(height: 15),
                     RichText(
                       text: TextSpan(
                         style: TextStyle(
@@ -129,17 +130,16 @@ class _PlanAddonsState extends State<PlanAddons> {
                               text: formatCurrency(termAmountWithAddons),
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.w900)),
-                          TextSpan(
-                            text: "/Year incl GST",
-                          ),
+                          TextSpan(text: "/Year incl GST"),
                         ],
                       ),
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 15),
                     SizedBox(
                         width: 240,
                         child: GradientButton(
                             text: "Continue",
+                            height: 35,
                             onPressed: () => widget.goback
                                 ? Navigator.pushAndRemoveUntil(
                                     context,
@@ -151,7 +151,6 @@ class _PlanAddonsState extends State<PlanAddons> {
                                     MaterialPageRoute(
                                         builder: (context) => HealthOverview()),
                                   ))),
-                    SizedBox(height: 25),
                   ],
                 )),
           )
@@ -184,7 +183,7 @@ class AddOnsCard extends StatelessWidget {
       required this.isChecked,
       required this.onChanged,
       required this.index,
-      this.data});
+      required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -200,20 +199,19 @@ class AddOnsCard extends StatelessWidget {
                     value: isChecked,
                     onChanged: (value) => {onChanged(value!, index)}),
                 SizedBox(width: 6),
-                Text("Vaccine Cover",
+                Text(data['title'],
                     style:
                         TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
               ]),
               SizedBox(height: 12),
               Padding(
                 padding: const EdgeInsets.only(left: 10.0),
-                child: Text("From INR 435",
+                child: Text("From " + formatCurrency(data['price']),
                     style:
                         TextStyle(fontSize: 14, fontWeight: FontWeight.w700)),
               ),
               SizedBox(height: 20),
-              Text(
-                  "Covers expenses for certain preventive vaccines against any disease(s) which has been declared as pandemic or epidemic",
+              Text(data['description'],
                   style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400)),
             ])));
   }

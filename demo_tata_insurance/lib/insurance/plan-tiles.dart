@@ -105,7 +105,7 @@ class PlanTile extends StatelessWidget {
                 );
               },
               labelText: 'Search within the policy',
-              hintText: "What's not included"),
+              hintText: ""),
           Text(
             currentStep == 0
                 ? "${formatCurrency(planData["amountYearly"])}/year incl GST"
@@ -210,8 +210,12 @@ class TermSearchTextField extends StatelessWidget {
       height: 44.0,
       margin: EdgeInsets.symmetric(vertical: 20.0),
       padding: EdgeInsets.symmetric(horizontal: 12.0),
-      child: TextField(
+      child: TextFormField(
         onChanged: null,
+        textInputAction: TextInputAction.done,
+        onFieldSubmitted: (value) {
+          if (value != "") onTap();
+        },
         decoration: InputDecoration(
           labelText: labelText,
           hintText: hintText,

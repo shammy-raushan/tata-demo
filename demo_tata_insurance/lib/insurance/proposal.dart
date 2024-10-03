@@ -154,16 +154,16 @@ class TextWithHeader extends StatelessWidget {
         Text(
           title,
           style: TextStyle(
-              fontSize: 13,
+              fontSize: 12,
               color: Color(0xFF666666),
               fontWeight: FontWeight.w600),
         ),
-        SizedBox(height: 10),
+        SizedBox(height: 5),
         Text(
           text,
           textAlign: TextAlign.left,
           style: TextStyle(
-            fontSize: 17,
+            fontSize: 13,
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -217,9 +217,9 @@ class _NomineeDetails extends StatelessWidget {
             ),
             SizedBox(height: 30),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TextWithHeader(title: "Name", text: data["name"]),
-                SizedBox(width: 120),
                 TextWithHeader(title: "DOB", text: data["dob"]),
               ],
             ),
@@ -256,10 +256,13 @@ class _ApplicationDetails extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushReplacement(
+                    Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => HealthOverview(goback: true),
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            HealthOverview(goback: true),
+                        transitionDuration: Duration.zero,
+                        reverseTransitionDuration: Duration.zero,
                       ),
                     );
                   },
@@ -325,7 +328,7 @@ class _PlanDetails extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushReplacement(
+                    Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => TermSelection(goback: true),
@@ -386,7 +389,7 @@ class _PlanDetails extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextWithHeader(title: "Insurance for", text: "Self"),
-                    SizedBox(height: 25),
+                    SizedBox(height: 20),
                     TextWithHeader(
                       title: "Premium",
                       text: formatCurrency(termAmountWithAddons) +
@@ -398,7 +401,7 @@ class _PlanDetails extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextWithHeader(title: "Policy type", text: "Individual"),
-                    SizedBox(height: 25),
+                    SizedBox(height: 20),
                     TextWithHeader(
                       title: "Coverage amount",
                       text: '${formatCurrency(termAmount)}',
@@ -407,7 +410,7 @@ class _PlanDetails extends StatelessWidget {
                 )
               ],
             ),
-            SizedBox(height: 30),
+            SizedBox(height: 20),
             TextWithHeader(title: "Add Ons", text: totalAddons + " Selected"),
             SizedBox(height: 15),
           ]),
@@ -470,9 +473,9 @@ class _ProfileDetails extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextWithHeader(title: "Name", text: data["name"]),
-                    SizedBox(height: 25),
+                    SizedBox(height: 20),
                     TextWithHeader(title: "Gender", text: data["gender"]),
-                    SizedBox(height: 25),
+                    SizedBox(height: 20),
                     TextWithHeader(title: "Mobile Number", text: mobileNumber),
                   ],
                 ),
@@ -480,9 +483,9 @@ class _ProfileDetails extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextWithHeader(title: "DOB", text: data["dob"]),
-                    SizedBox(height: 25),
+                    SizedBox(height: 20),
                     TextWithHeader(title: "Pincode", text: pincode),
-                    SizedBox(height: 25),
+                    SizedBox(height: 20),
                     (panNumber == null || panNumber!.isNotEmpty)
                         ? TextWithHeader(title: "PAN", text: "XXXXXXXXXX")
                         : SizedBox(height: 50)

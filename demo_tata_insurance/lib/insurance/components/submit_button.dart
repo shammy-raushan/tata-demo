@@ -4,13 +4,18 @@ class GradientButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final String text;
   final bool isDisabled;
+  final double height;
 
-  GradientButton({required this.text, this.onPressed, this.isDisabled = false});
+  GradientButton(
+      {required this.text,
+      this.onPressed,
+      this.isDisabled = false,
+      this.height = 45});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 45,
+      height: height,
       decoration: BoxDecoration(
         gradient: isDisabled
             ? null
