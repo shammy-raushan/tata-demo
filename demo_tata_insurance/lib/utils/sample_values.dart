@@ -76,49 +76,49 @@ const List<Map<String, dynamic>> planAddons = [
   },
   {
     "title": "Maternity Cover",
-    "price": "435",
+    "price": "234",
     "description":
         "Covers expenses for certain preventive vaccines against any disease(s) which has been declared as pandemic or epidemic"
   },
   {
     "title": "Critical Illness Cover",
-    "price": "435",
+    "price": "423",
     "description":
         "Covers expenses for certain preventive vaccines against any disease(s) which has been declared as pandemic or epidemic"
   },
   {
     "title": "Personal Accident Cover",
-    "price": "435",
+    "price": "654",
     "description":
         "Covers expenses for certain preventive vaccines against any disease(s) which has been declared as pandemic or epidemic"
   },
   {
     "title": "Cancer Cover",
-    "price": "435",
+    "price": "245",
     "description":
         "Covers expenses for certain preventive vaccines against any disease(s) which has been declared as pandemic or epidemic"
   },
   {
     "title": "Heart Cover",
-    "price": "435",
+    "price": "546",
     "description":
         "Covers expenses for certain preventive vaccines against any disease(s) which has been declared as pandemic or epidemic"
   },
   {
     "title": "Diabetes Cover",
-    "price": "435",
+    "price": "345",
     "description":
         "Covers expenses for certain preventive vaccines against any disease(s) which has been declared as pandemic or epidemic"
   },
   {
     "title": "Kidney Cover",
-    "price": "435",
+    "price": "735",
     "description":
         "Covers expenses for certain preventive vaccines against any disease(s) which has been declared as pandemic or epidemic"
   },
   {
     "title": "Liver Cover",
-    "price": "435",
+    "price": "135",
     "description":
         "Covers expenses for certain preventive vaccines against any disease(s) which has been declared as pandemic or epidemic"
   }

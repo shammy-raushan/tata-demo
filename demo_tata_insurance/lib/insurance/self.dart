@@ -72,9 +72,16 @@ class _SelfSelectionState extends State<SelfSelection> {
                                           imgUrl: "assets/female.png"),
                                       const SizedBox(height: 24),
                                       CustomSelector(
-                                          cardSel:
-                                              selectedCards.contains("Family"),
-                                          onCardSelected: onFamilyCardSlected,
+                                          cardSel: selectedCards
+                                                  .contains("Family") &&
+                                              relationship != null,
+                                          onCardSelected: () => {
+                                                if (!selectedCards
+                                                    .contains("Family"))
+                                                  onFamilyCardSlected(),
+                                                onCardSelected("Family"),
+                                              },
+                                          onEdit: onFamilyCardSlected,
                                           title: "Family",
                                           relationship: relationship,
                                           imgUrl: "assets/family.png"),
@@ -110,13 +117,16 @@ class _SelfSelectionState extends State<SelfSelection> {
     setState(() {
       if (selectedCards.contains(title)) {
         selectedCards.remove(title);
+        if (title == "Family") {
+          relationship = null;
+        }
       } else {
         selectedCards.add(title);
       }
     });
   }
 
-  Future<void> onFamilyCardSlected(String title) async {
+  Future<void> onFamilyCardSlected() async {
     await showModalBottomSheet<dynamic>(
       backgroundColor: Colors.white,
       context: context,
@@ -195,7 +205,6 @@ class _SelfSelectionState extends State<SelfSelection> {
                         isDisabled:
                             !(relationship == null || relationship!.isNotEmpty),
                         onPressed: () => {
-                              onCardSelected(title),
                               Navigator.pop(context),
                             })),
               ],
@@ -209,7 +218,8 @@ class _SelfSelectionState extends State<SelfSelection> {
 
 class CustomSelector extends StatelessWidget {
   final bool cardSel;
-  final Function(String) onCardSelected;
+  final Function onCardSelected;
+  final Function? onEdit;
   final String title;
   final String imgUrl;
   final String? relationship;
@@ -219,15 +229,16 @@ class CustomSelector extends StatelessWidget {
       required this.onCardSelected,
       required this.title,
       required this.imgUrl,
-      this.relationship});
+      this.relationship,
+      this.onEdit});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        onCardSelected(title);
-      },
-      child: Container(
+        onTap: () {
+          onCardSelected();
+        },
+        child: Container(
           margin: EdgeInsets.symmetric(horizontal: 20),
           height: (relationship != null) ? 130 : 80,
           decoration: BoxDecoration(
@@ -285,8 +296,13 @@ class CustomSelector extends StatelessWidget {
                         children: [
                           _CustomChip(text: relationship!),
                           SizedBox(width: 15),
-                          Icon(Icons.edit,
-                              size: 16, color: Colors.blue.shade900),
+                          if (onEdit != null)
+                            GestureDetector(
+                                onTap: () {
+                                  onEdit!();
+                                },
+                                child: Icon(Icons.edit,
+                                    size: 16, color: Colors.blue.shade900)),
                         ],
                       ),
                     ),
@@ -300,8 +316,8 @@ class CustomSelector extends StatelessWidget {
                 child: Icon(Icons.check,
                     size: 24, color: Color(0xFF254A9E)), // Tick mark icon
               ),
-          ])),
-    );
+          ]),
+        ));
   }
 }
 

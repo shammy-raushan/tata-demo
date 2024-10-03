@@ -85,7 +85,7 @@ class _TermSelectionState extends State<TermSelection> {
     return Scaffold(
       appBar: AppBar(
         title: Image.asset('assets/tata-logo.png', width: 100, height: 60),
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: widget.goback,
         actions: const <Widget>[],
       ),
       body: Stack(children: <Widget>[
@@ -223,21 +223,14 @@ class _TitleCard extends StatelessWidget {
                 child: Tooltip(
                   message:
                       'The Maximum amount that the policyholder can claim under a health insurance policy in a policy year.',
-                  showDuration: Duration(
-                      seconds: 2), // How long the tooltip stays visible
+                  showDuration: Duration(seconds: 2),
                   decoration: BoxDecoration(
                     color: Color(0xFFE7EEFB),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  textStyle: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                  ),
-                  child: Icon(
-                    Icons.help_outline,
-                    size: 16,
-                    color: Colors.black.withOpacity(0.5),
-                  ),
+                  textStyle: TextStyle(color: Colors.black, fontSize: 12),
+                  child: Icon(Icons.help_outline,
+                      size: 16, color: Colors.black.withOpacity(0.5)),
                 )),
           ),
         ],
@@ -454,7 +447,7 @@ class TermChip extends StatelessWidget {
         },
         child: Stack(
           children: [
-            isSelected
+            isSelected && option['value'] == 5000000
                 ? Positioned(
                     top: 0,
                     right: 5,
