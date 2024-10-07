@@ -67,7 +67,8 @@ class _SelfSelectionState extends State<SelfSelection> {
                                       CustomSelector(
                                           cardSel:
                                               selectedCards.contains("Self"),
-                                          onCardSelected: onCardSelected,
+                                          onCardSelected: () =>
+                                              onCardSelected("Self"),
                                           title: "Self",
                                           imgUrl: "assets/female.png"),
                                       const SizedBox(height: 24),
