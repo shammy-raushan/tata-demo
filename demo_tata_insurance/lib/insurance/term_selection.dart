@@ -1,3 +1,4 @@
+import 'package:demo_tata_insurance/insurance/components/floating_action_btn.dart';
 import 'package:demo_tata_insurance/insurance/components/submit_button.dart';
 import 'package:demo_tata_insurance/insurance/slider_page.dart';
 import 'package:flutter/material.dart';
@@ -83,109 +84,133 @@ class _TermSelectionState extends State<TermSelection> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Image.asset('assets/tata-logo.png', width: 100, height: 60),
-        automaticallyImplyLeading: widget.goback,
-        actions: const <Widget>[],
-      ),
-      body: Stack(children: <Widget>[
-        Positioned.fill(
-            child: Opacity(
-          opacity: 0.04,
-          child: Image.asset('assets/pattern.png', fit: BoxFit.cover),
-        )),
-        Positioned.fill(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const CustomStepper(currentStep: 1),
-                  Image.asset('assets/InsuredCouple.png', fit: BoxFit.cover),
-                  PhysicalModel(
-                    color: Color.fromARGB(244, 255, 255, 255),
-                    elevation: 1,
-                    // shadowColor: Colors.blue,
-                    borderRadius: BorderRadius.circular(20),
-                    child: Container(
-                        constraints: BoxConstraints(maxWidth: 350),
-                        margin: const EdgeInsets.fromLTRB(20, 35, 20, 30),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _TitleCard(),
-                            const SizedBox(height: 46),
-                            AmountSlider(
-                              onTermAmountSelected: onTermAmountSelected,
-                              selectAmount: selectAmount,
-                              termAmount: termAmount,
-                            ),
-                            const SizedBox(height: 40),
-                            TenureSlider(
-                              onYearSelected: onTermTenureSelected,
-                              selectYear: tenure,
-                              termYears: termTenure,
-                            ),
-                            SizedBox(height: 25),
-                            (selectAmount == 5000000)
-                                ? Padding(
-                                    padding: const EdgeInsets.only(top: 8.0),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                        border: Border.all(
-                                            color: Color(0xFFFCD062), width: 1),
-                                        color: Color(0x4DFCD062),
+        appBar: AppBar(
+          title: Image.asset('assets/tata-logo.png', width: 100, height: 60),
+          automaticallyImplyLeading: widget.goback,
+          actions: const <Widget>[],
+        ),
+        body: Stack(children: <Widget>[
+          Positioned.fill(
+              child: Opacity(
+            opacity: 0.04,
+            child: Image.asset('assets/pattern.png', fit: BoxFit.cover),
+          )),
+          Positioned.fill(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const CustomStepper(currentStep: 2, progress: 0.4),
+                    Image.asset('assets/InsuredCouple.png', fit: BoxFit.cover),
+                    PhysicalModel(
+                      color: Color.fromARGB(244, 255, 255, 255),
+                      elevation: 1,
+                      // shadowColor: Colors.blue,
+                      borderRadius: BorderRadius.circular(20),
+                      child: Container(
+                          constraints: BoxConstraints(maxWidth: 350),
+                          margin: const EdgeInsets.fromLTRB(20, 35, 20, 30),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _TitleCard(),
+                              const SizedBox(height: 46),
+                              AmountSlider(
+                                onTermAmountSelected: onTermAmountSelected,
+                                selectAmount: selectAmount,
+                                termAmount: termAmount,
+                              ),
+                              const SizedBox(height: 20),
+                              MouseRegion(
+                                  cursor: SystemMouseCursors
+                                      .click, // Sets the cursor to a hand
+                                  child: GestureDetector(
+                                    onTap: () => {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => planspage(),
+                                        ),
+                                      )
+                                    },
+                                    child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 14.0),
+                                        child: Text(
+                                            "Unsure of the right coverage amount?",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Color(0xFF2B62AA),
+                                                fontWeight: FontWeight.w600))),
+                                  )),
+                              const SizedBox(height: 32),
+                              TenureSlider(
+                                onYearSelected: onTermTenureSelected,
+                                selectYear: tenure,
+                                termYears: termTenure,
+                              ),
+                              SizedBox(height: 25),
+                              (selectAmount == 5000000)
+                                  ? Padding(
+                                      padding: const EdgeInsets.only(top: 8.0),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                          border: Border.all(
+                                              color: Color(0xFFFCD062),
+                                              width: 1),
+                                          color: Color(0x4DFCD062),
+                                        ),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 12.0, vertical: 9.0),
+                                        child: Row(
+                                          children: [
+                                            Icon(Icons.star,
+                                                size: 14,
+                                                color: Color(0xFFFCD062)),
+                                            SizedBox(width: 10),
+                                            Expanded(
+                                              child: Text(
+                                                  '85% in your age group have opted for this cover',
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 14.0,
+                                                  )),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 12.0, vertical: 9.0),
-                                      child: Row(
-                                        children: [
-                                          Icon(Icons.star,
-                                              size: 14,
-                                              color: Color(0xFFFCD062)),
-                                          SizedBox(width: 10),
-                                          Expanded(
-                                            child: Text(
-                                                '85% in your age group have opted for this cover',
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 14.0,
-                                                )),
-                                          ),
-                                        ],
+                                    )
+                                  : SizedBox(),
+                              const SizedBox(height: 23),
+                              GradientButton(
+                                  text: "Next",
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            planspage(goback: widget.goback),
                                       ),
-                                    ),
-                                  )
-                                : SizedBox(),
-                            const SizedBox(height: 23),
-                            GradientButton(
-                                text: "Next",
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          planspage(goback: widget.goback),
-                                    ),
-                                  );
-                                }),
-                            const SizedBox(height: 29)
-                          ],
-                        )),
-                  ),
-                  const SizedBox(height: 29),
-                  _unsureWidget(),
-                  _videoWidget()
-                ],
+                                    );
+                                  }),
+                              const SizedBox(height: 29)
+                            ],
+                          )),
+                    ),
+                    const SizedBox(height: 29),
+                    //_unsureWidget(),
+                    _videoWidget()
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      ]),
-    );
+        ]),
+        floatingActionButton: FloatingActionBtn());
   }
 
   void onTermAmountSelected(dynamic amount) {
@@ -222,13 +247,14 @@ class _TitleCard extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 8.0),
                 child: Tooltip(
                   message:
-                      'The Maximum amount that the policyholder can claim under a health insurance policy in a policy year.',
+                      'The Maximum amount that the policyholder can claim \nunder a health insurance policy in a policy year.',
                   showDuration: Duration(seconds: 2),
                   decoration: BoxDecoration(
                     color: Color(0xFFE7EEFB),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   textStyle: TextStyle(color: Colors.black, fontSize: 12),
+                  margin: EdgeInsets.only(left: 150),
                   child: Icon(Icons.help_outline,
                       size: 16, color: Colors.black.withOpacity(0.5)),
                 )),
@@ -317,7 +343,7 @@ class AmountSlider extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         Wrap(
-          spacing: 20.0,
+          spacing: 14.0,
           runSpacing: 24.0,
           children: termAmount.asMap().entries.map((entry) {
             var option = entry.value;

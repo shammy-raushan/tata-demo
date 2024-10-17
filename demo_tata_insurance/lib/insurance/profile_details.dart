@@ -27,6 +27,7 @@ class ProfileDetails extends StatefulWidget {
 
 class _ProfileDetailsState extends State<ProfileDetails> {
   final _formKey = GlobalKey<FormState>();
+  final TextEditingController _panController = TextEditingController();
   bool _isChecked = false;
   String selectedOption = '1';
   String panNumber = '';
@@ -200,16 +201,23 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                                     : Column(
                                         children: [
                                           LoginTextBox(
-                                            labelText: "PAN Number",
+                                            labelText: "PAN",
+                                            controller: _panController,
                                             obscureText: _obscureText,
                                             validator: validatePAN,
                                             onChanged: (value) {
-                                              panNumber = value;
+                                              panNumber = value.toUpperCase();
+                                              setState(() {
+                                                _panController.text =
+                                                    value.toUpperCase();
+                                                _panController.selection =
+                                                    TextSelection.fromPosition(
+                                                  TextPosition(
+                                                      offset: _panController
+                                                          .text.length),
+                                                );
+                                              });
                                             },
-                                            inputFormatters: [
-                                              FilteringTextInputFormatter.allow(
-                                                  RegExp('[A-Z0-9]')),
-                                            ],
                                             textCapitalization:
                                                 TextCapitalization.characters,
                                             suffixIcon: IconButton(

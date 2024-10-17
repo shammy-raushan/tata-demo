@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:demo_tata_insurance/insurance/components/submit_button.dart';
 import 'package:demo_tata_insurance/insurance/term_selection.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +18,7 @@ class SelfSelection extends StatefulWidget {
 class _SelfSelectionState extends State<SelfSelection> {
   final _formKey = GlobalKey<FormState>();
   Set<String> selectedCards = {};
-  String? relationship;
+  List<String?> relationship = [null];
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +41,10 @@ class _SelfSelectionState extends State<SelfSelection> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const CustomStepper(currentStep: 1),
+                const CustomStepper(
+                  currentStep: 2,
+                  progress: 0.2,
+                ),
                 Image.asset('assets/InsuredCouple.png', fit: BoxFit.cover),
                 PhysicalModel(
                     color: Color.fromARGB(244, 255, 255, 255),
@@ -65,27 +70,31 @@ class _SelfSelectionState extends State<SelfSelection> {
                                       ),
                                       const SizedBox(height: 40),
                                       CustomSelector(
-                                          cardSel:
-                                              selectedCards.contains("Self"),
-                                          onCardSelected: () =>
-                                              onCardSelected("Self"),
-                                          title: "Self",
-                                          imgUrl: "assets/female.png"),
+                                        cardSel: selectedCards.contains("Self"),
+                                        onCardSelected: () =>
+                                            onCardSelected("Self"),
+                                        title: "Self",
+                                        imgUrl: "assets/female.png",
+                                        isRelationshipSelected:
+                                            isRelationshipSelected(),
+                                      ),
                                       const SizedBox(height: 24),
                                       CustomSelector(
-                                          cardSel: selectedCards
-                                                  .contains("Family") &&
-                                              relationship != null,
-                                          onCardSelected: () => {
-                                                if (!selectedCards
-                                                    .contains("Family"))
-                                                  onFamilyCardSlected(),
-                                                onCardSelected("Family"),
-                                              },
-                                          onEdit: onFamilyCardSlected,
-                                          title: "Family",
-                                          relationship: relationship,
-                                          imgUrl: "assets/family.png"),
+                                        cardSel:
+                                            selectedCards.contains("Family") &&
+                                                !isRelationshipSelected(),
+                                        onCardSelected: () => {
+                                          if (!selectedCards.contains("Family"))
+                                            onFamilyCardSlected(),
+                                          onCardSelected("Family"),
+                                        },
+                                        onEdit: onFamilyCardSlected,
+                                        title: "Family",
+                                        relationship: relationship,
+                                        imgUrl: "assets/family.png",
+                                        isRelationshipSelected:
+                                            !isRelationshipSelected(),
+                                      ),
                                       const SizedBox(height: 40),
                                       Padding(
                                           padding: EdgeInsets.symmetric(
@@ -98,7 +107,8 @@ class _SelfSelectionState extends State<SelfSelection> {
                                                     context,
                                                     MaterialPageRoute(
                                                         builder: (context) =>
-                                                            TermSelection()));
+                                                            TermSelection(
+                                                                goback: true)));
                                               })),
                                     ])))))
               ],
@@ -108,9 +118,12 @@ class _SelfSelectionState extends State<SelfSelection> {
         floatingActionButton: FloatingActionBtn());
   }
 
-  void _onRelationSelected(String value) {
+  void _onRelationSelected(String? value, int index) {
     setState(() {
-      relationship = value;
+      if (value == null) {
+        relationship.removeAt(index);
+      } else
+        relationship[index] = value;
     });
   }
 
@@ -119,12 +132,18 @@ class _SelfSelectionState extends State<SelfSelection> {
       if (selectedCards.contains(title)) {
         selectedCards.remove(title);
         if (title == "Family") {
-          relationship = null;
+          relationship.clear();
+          relationship.add(null);
         }
       } else {
         selectedCards.add(title);
       }
     });
+  }
+
+  bool isRelationshipSelected() {
+    bool allNulls = relationship.any((element) => element == null);
+    return allNulls;
   }
 
   Future<void> onFamilyCardSlected() async {
@@ -134,84 +153,10 @@ class _SelfSelectionState extends State<SelfSelection> {
       isScrollControlled: true,
       useSafeArea: true,
       builder: (BuildContext context) {
-        return Padding(
-          padding: const EdgeInsets.all(23.0),
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height * 0.5,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                          child: Text(
-                        'Add Family',
-                        overflow: TextOverflow.clip,
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      )),
-                      IconButton(
-                        icon: Icon(Icons.close, size: 16, color: Colors.black),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ]),
-                SizedBox(height: 55),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Add members you want to cover',
-                        overflow: TextOverflow.clip,
-                        style: TextStyle(fontSize: 14),
-                      ),
-                      SizedBox(height: 20),
-                      Container(
-                        constraints: BoxConstraints(maxWidth: 300),
-                        child: CustomDropdown(
-                          label: 'Relationship',
-                          onSelected: _onRelationSelected,
-                          initialValue: relationship,
-                          items: [
-                            'Father',
-                            'Mother',
-                            'Spouse',
-                            'Son',
-                            'Daughter',
-                            'Brother',
-                            'Sister',
-                            'Other',
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        '+ Member',
-                        overflow: TextOverflow.clip,
-                        style:
-                            TextStyle(fontSize: 14, color: Color(0xFF2B62AA)),
-                      ),
-                      SizedBox(height: 55),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                    width: 250,
-                    child: GradientButton(
-                        text: "Apply",
-                        isDisabled:
-                            !(relationship == null || relationship!.isNotEmpty),
-                        onPressed: () => {
-                              Navigator.pop(context),
-                            })),
-              ],
-            ),
-          ),
-        );
+        return _FamilyMemberModel(
+            relationship: relationship,
+            onRelationSelected: _onRelationSelected,
+            isRelationshipSelected: isRelationshipSelected);
       },
     );
   }
@@ -223,7 +168,8 @@ class CustomSelector extends StatelessWidget {
   final Function? onEdit;
   final String title;
   final String imgUrl;
-  final String? relationship;
+  final List<String?>? relationship;
+  final bool isRelationshipSelected;
   const CustomSelector(
       {super.key,
       required this.cardSel,
@@ -231,7 +177,8 @@ class CustomSelector extends StatelessWidget {
       required this.title,
       required this.imgUrl,
       this.relationship,
-      this.onEdit});
+      this.onEdit,
+      required this.isRelationshipSelected});
 
   @override
   Widget build(BuildContext context) {
@@ -241,7 +188,7 @@ class CustomSelector extends StatelessWidget {
         },
         child: Container(
           margin: EdgeInsets.symmetric(horizontal: 20),
-          height: (relationship != null) ? 130 : 80,
+          height: (relationship != null && isRelationshipSelected) ? 130 : 80,
           decoration: BoxDecoration(
             color: Colors.white.withOpacity(0.6),
             borderRadius: BorderRadius.circular(12),
@@ -290,12 +237,20 @@ class CustomSelector extends StatelessWidget {
                       ),
                     ],
                   ),
-                  if (relationship != null)
+                  if (relationship != null && isRelationshipSelected)
                     Padding(
                       padding: const EdgeInsets.only(left: 16.0, top: 14),
                       child: Row(
                         children: [
-                          _CustomChip(text: relationship!),
+                          Wrap(
+                            spacing: 8,
+                            runSpacing: 8,
+                            children: relationship!
+                                .map((relationship) =>
+                                    _CustomChip(text: relationship!))
+                                .toList(),
+                          ),
+                          // _CustomChip(text: relationship!),
                           SizedBox(width: 15),
                           if (onEdit != null)
                             GestureDetector(
@@ -343,6 +298,126 @@ class _CustomChip extends StatelessWidget {
                 fontSize: 10.0,
               )),
         ],
+      ),
+    );
+  }
+}
+
+class _FamilyMemberModel extends StatefulWidget {
+  final List<String?> relationship;
+  final Function onRelationSelected;
+  final Function isRelationshipSelected;
+  const _FamilyMemberModel(
+      {super.key,
+      required this.relationship,
+      required this.onRelationSelected,
+      required this.isRelationshipSelected});
+
+  @override
+  State<_FamilyMemberModel> createState() => __FamilyMemberModelState();
+}
+
+class __FamilyMemberModelState extends State<_FamilyMemberModel> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(23.0),
+      child: SizedBox(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              Expanded(
+                  child: Text(
+                'Add Family',
+                overflow: TextOverflow.clip,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              )),
+              IconButton(
+                icon: Icon(Icons.close, size: 16, color: Colors.black),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ]),
+            SizedBox(height: 55),
+            Container(
+              alignment: Alignment.centerLeft,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Add members you want to cover',
+                    overflow: TextOverflow.clip,
+                    style: TextStyle(fontSize: 14),
+                  ),
+                  SizedBox(height: 20),
+                  ...List.generate(widget.relationship.length, (index) {
+                    return Container(
+                      constraints: BoxConstraints(maxWidth: 300),
+                      margin: EdgeInsets.only(bottom: 10),
+                      child: CustomDropdown(
+                        label: 'Relationship',
+                        onSelected: (value) =>
+                            widget.onRelationSelected(value, index),
+                        initialValue: widget.relationship[index],
+                        items: [
+                          'Father',
+                          'Mother',
+                          'Spouse',
+                          'Son',
+                          'Daughter',
+                          'Brother',
+                          'Sister',
+                          'Other',
+                        ],
+                      ),
+                    );
+                  }),
+                  // Container(
+                  //   constraints: BoxConstraints(maxWidth: 300),
+                  //   child: CustomDropdown(
+                  //     label: 'Relationship',
+                  //     onSelected: _onRelationSelected,
+                  //     initialValue: relationship,
+                  //     items: [
+                  //       'Father',
+                  //       'Mother',
+                  //       'Spouse',
+                  //       'Son',
+                  //       'Daughter',
+                  //       'Brother',
+                  //       'Sister',
+                  //       'Other',
+                  //     ],
+                  //   ),
+                  // ),
+                  SizedBox(height: 10),
+                  GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          widget.relationship.add(null);
+                        });
+                      },
+                      child: Text(
+                        '+ Member',
+                        overflow: TextOverflow.clip,
+                        style:
+                            TextStyle(fontSize: 14, color: Color(0xFF2B62AA)),
+                      )),
+                  SizedBox(height: 55),
+                ],
+              ),
+            ),
+            SizedBox(
+                width: 250,
+                child: GradientButton(
+                    text: "Apply",
+                    onPressed: () => {
+                          Navigator.pop(context),
+                        })),
+          ],
+        ),
       ),
     );
   }

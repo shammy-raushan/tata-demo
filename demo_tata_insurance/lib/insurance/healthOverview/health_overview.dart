@@ -43,7 +43,7 @@ class _HealthOverviewState extends State<HealthOverview> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const CustomStepper(currentStep: 3),
+                    const CustomStepper(currentStep: 3, progress: 0.4),
                     SizedBox(height: 30),
                     Text('Tell us about your health',
                         style: TextStyle(
