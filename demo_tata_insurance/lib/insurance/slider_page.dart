@@ -91,62 +91,8 @@ class _planspageState extends State<planspage> {
                       const SizedBox(height: 24),
                       _TermsSlider(
                           currentStep: _sliding, goback: widget.goback),
-                      const SizedBox(height: 10),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8.0),
-                              border: Border.all(
-                                  color: Color(0xFF254A9E), width: 1),
-                              color: Color(0xFFE7EEFB)),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 12.0, vertical: 9.0),
-                          child: Row(
-                            children: [
-                              Image.asset("discount.png"),
-                              SizedBox(width: 15),
-                              Expanded(
-                                child: RichText(
-                                  text: TextSpan(
-                                    children: [
-                                      TextSpan(
-                                        text:
-                                            "Looking to reduce your premium further?\n",
-                                        style: TextStyle(
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w700,
-                                          color: Colors.black,
-                                          height: 1.5,
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: "Check your CIBIL score ",
-                                        style: TextStyle(
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w400,
-                                          color: Colors.blue,
-                                          height: 1.5,
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text:
-                                            "to get an extra discount on your premium.",
-                                        style: TextStyle(
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w400,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 40),
+
+                      const SizedBox(height: 20),
 
                       Container(
                         alignment: Alignment.center,
@@ -237,12 +183,12 @@ class _TermsSlider extends StatefulWidget {
 }
 
 class __TermsSliderState extends State<_TermsSlider> {
-  int _current = 0;
+  int _current = 1;
   final CarouselSliderController _controller = CarouselSliderController();
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 565,
+      height: (_current == 1) ? 665 : 565,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         CarouselSlider.builder(
           itemCount: samplePlans.length,
@@ -252,11 +198,12 @@ class __TermsSliderState extends State<_TermsSlider> {
               currentStep: widget.currentStep,
               planData: samplePlans[index],
               goback: widget.goback,
+              sliding: _current,
             );
           },
           carouselController: _controller,
           options: CarouselOptions(
-              height: 535,
+              height: (_current == 1) ? 635 : 535,
               enlargeCenterPage: true,
               initialPage: 1,
               viewportFraction: 0.8,

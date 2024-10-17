@@ -11,13 +11,15 @@ class PlanTile extends StatelessWidget {
   final int index;
   final int currentStep;
   final bool goback;
+  final int sliding;
   final Map<String, dynamic> planData;
   const PlanTile(
       {super.key,
       required this.index,
       required this.planData,
       required this.currentStep,
-      required this.goback});
+      required this.goback,
+      required this.sliding});
 
   @override
   Widget build(BuildContext context) {
@@ -116,8 +118,10 @@ class PlanTile extends StatelessWidget {
             ),
           ),
 
+          SizedBox(height: 15),
+          (index == 1 && sliding == 1) ? _CibilCard() : SizedBox(),
           //Hyperlink
-          SizedBox(height: 25),
+          SizedBox(height: 15),
           GestureDetector(
             onTap: () => Navigator.push(
               context,
@@ -252,6 +256,62 @@ class TermSearchTextField extends StatelessWidget {
           contentPadding: EdgeInsets.symmetric(horizontal: 12.0),
         ),
         style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w500),
+      ),
+    );
+  }
+}
+
+class _CibilCard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8.0),
+            border: Border.all(color: Color(0xFF254A9E), width: 1),
+            color: Color(0xFFE7EEFB)),
+        padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 9.0),
+        child: Row(
+          children: [
+            Image.asset("discount.png"),
+            SizedBox(width: 15),
+            Expanded(
+              child: RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: "Looking to reduce your premium further?\n",
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black,
+                        height: 1.5,
+                      ),
+                    ),
+                    TextSpan(
+                      text: "Check your CIBIL score ",
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.blue,
+                        height: 1.5,
+                      ),
+                    ),
+                    TextSpan(
+                      text: "to get an extra discount on your premium.",
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

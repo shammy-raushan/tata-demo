@@ -23,6 +23,15 @@ class _PlanDetailsState extends State<PlanDetails> {
     _selectedPlan = samplePlans[widget.index]['title'];
   }
 
+  getPlanDetails(int index) {
+    if (index == 0)
+      _planDetails = samplePlans[widget.index]['whatIsCovered'];
+    else if (index == 1)
+      _planDetails = samplePlans[widget.index]['whatIsNotIncluded'];
+    else
+      _planDetails = samplePlans[widget.index]['waitingPeriod'];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,6 +68,7 @@ class _PlanDetailsState extends State<PlanDetails> {
                         onTermAmountSelected: (selectedIndex) {
                           setState(() {
                             _selectedIndex = selectedIndex;
+                            getPlanDetails(selectedIndex);
                           });
                         },
                       );
