@@ -14,7 +14,9 @@ enum ProductType { Gold, Silver, Dimond, Blank }
 
 class TermSelection extends StatefulWidget {
   final bool goback;
-  const TermSelection({super.key, this.goback = false});
+  final bool gotoProposal;
+  const TermSelection(
+      {super.key, this.goback = false, this.gotoProposal = false});
 
   @override
   State<TermSelection> createState() => _TermSelectionState();
@@ -131,7 +133,9 @@ class _TermSelectionState extends State<TermSelection> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => planspage(),
+                                          builder: (context) => planspage(
+                                              gotoProposal:
+                                                  widget.gotoProposal),
                                         ),
                                       )
                                     },
@@ -192,8 +196,9 @@ class _TermSelectionState extends State<TermSelection> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            planspage(goback: widget.goback),
+                                        builder: (context) => planspage(
+                                            goback: widget.goback,
+                                            gotoProposal: widget.gotoProposal),
                                       ),
                                     );
                                   }),
@@ -692,7 +697,9 @@ class _unsureWidget extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => planspage(),
+                      builder: (context) => planspage(
+                        gotoProposal: false,
+                      ),
                     ),
                   );
                 },
