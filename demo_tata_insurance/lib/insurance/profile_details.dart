@@ -47,6 +47,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
   Future<void> _loadvalues() async {
     try {
       selectedOption = await loadStoredValue('panSeletedOption');
+      if (selectedOption.isEmpty) selectedOption = '1';
       panNumber = await loadStoredValue('panNumber');
       pincode = await loadStoredValue('pincode');
       var profile = await loadStoredValue('profile');
@@ -96,7 +97,10 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                     left: 20, top: 23, right: 20, bottom: 20),
                 child: Column(
                   children: [
-                    CustomStepper(currentStep: 1),
+                    CustomStepper(
+                      currentStep: 1,
+                      progress: 0.4,
+                    ),
                     SvgPicture.asset('assets/KycForm.svg'),
                     PhysicalModel(
                       color: Color.fromARGB(244, 255, 255, 255),

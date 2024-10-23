@@ -47,7 +47,10 @@ class _PanProfileDetailsState extends State<PanProfileDetails> {
                       padding: const EdgeInsets.only(
                           left: 20, top: 23, right: 20, bottom: 20),
                       child: Column(children: [
-                        CustomStepper(currentStep: 1),
+                        CustomStepper(
+                          currentStep: 1,
+                          progress: 0.8,
+                        ),
                         SvgPicture.asset('assets/KycForm.svg'),
                         PhysicalModel(
                             color: Color.fromARGB(244, 255, 255, 255),

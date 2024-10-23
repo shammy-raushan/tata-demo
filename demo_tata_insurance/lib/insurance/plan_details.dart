@@ -14,12 +14,12 @@ class PlanDetails extends StatefulWidget {
 class _PlanDetailsState extends State<PlanDetails> {
   late List<String> _planDetails;
   late String _selectedPlan;
-  int _selectedIndex = 1;
+  int _selectedIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    _planDetails = samplePlans[widget.index]['whatIsNotIncluded'];
+    _planDetails = samplePlans[widget.index]['whatIsCovered'];
     _selectedPlan = samplePlans[widget.index]['title'];
   }
 
@@ -108,6 +108,7 @@ class _PlanDetailsState extends State<PlanDetails> {
 
 class _TextWithPrefix extends StatelessWidget {
   final String text;
+  final String searchText = 'Dom';
   const _TextWithPrefix({required this.text});
 
   @override
@@ -120,15 +121,42 @@ class _TextWithPrefix extends StatelessWidget {
           Icon(Icons.star, size: 14, color: Colors.grey),
           SizedBox(width: 10),
           Expanded(
-            child: Text(text,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 12.0,
-                )),
+            child: RichText(
+              text: _highlightText(text, searchText),
+            ),
           ),
         ],
       ),
     );
+  }
+
+  TextSpan _highlightText(String text, String search) {
+    if (search.isEmpty) {
+      return TextSpan(text: text);
+    }
+
+    final List<TextSpan> spans = [];
+    final RegExp regExp = RegExp(RegExp.escape(search), caseSensitive: false);
+    final Iterable<Match> matches = regExp.allMatches(text);
+
+    int start = 0;
+
+    for (final Match match in matches) {
+      if (start < match.start) {
+        spans.add(TextSpan(text: text.substring(start, match.start)));
+      }
+      spans.add(TextSpan(
+        text: match.group(0),
+        style: TextStyle(backgroundColor: Colors.yellow),
+      ));
+      start = match.end;
+    }
+
+    if (start < text.length) {
+      spans.add(TextSpan(text: text.substring(start)));
+    }
+
+    return TextSpan(children: spans);
   }
 }
 
