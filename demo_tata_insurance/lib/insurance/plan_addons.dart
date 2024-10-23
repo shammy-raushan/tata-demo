@@ -12,7 +12,9 @@ import 'proposal.dart';
 
 class PlanAddons extends StatefulWidget {
   final bool goback;
-  const PlanAddons({super.key, this.goback = false});
+  final bool gotoProposal;
+  const PlanAddons(
+      {super.key, this.goback = false, required this.gotoProposal});
 
   @override
   State<PlanAddons> createState() => _PlanAddonsState();
@@ -140,7 +142,7 @@ class _PlanAddonsState extends State<PlanAddons> {
                         child: GradientButton(
                             text: "Continue",
                             height: 35,
-                            onPressed: () => widget.goback
+                            onPressed: () => widget.gotoProposal
                                 ? Navigator.pushAndRemoveUntil(
                                     context,
                                     MaterialPageRoute(

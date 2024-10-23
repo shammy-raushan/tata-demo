@@ -131,7 +131,7 @@ class _ProposalPageState extends State<ProposalPage> {
                       insuranceDeclined,
                       substance
                     ]),
-                    if (nominee != null || nominee!.isNotEmpty)
+                    if (nominee != null && nominee!.isNotEmpty && nominee != "")
                       _NomineeDetails(data: jsonDecode(nominee!)),
                     SizedBox(height: 30),
                     GradientButton(text: "Confirm & Proceed", onPressed: () {})
@@ -331,7 +331,8 @@ class _PlanDetails extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => TermSelection(goback: true),
+                        builder: (context) =>
+                            TermSelection(goback: true, gotoProposal: true),
                       ),
                     );
                   },

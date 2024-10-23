@@ -10,7 +10,8 @@ import 'components/floating_action_btn.dart';
 
 class planspage extends StatefulWidget {
   final bool goback;
-  const planspage({super.key, this.goback = false});
+  final bool gotoProposal;
+  const planspage({super.key, this.goback = false, required this.gotoProposal});
 
   @override
   State<planspage> createState() => _planspageState();
@@ -90,7 +91,10 @@ class _planspageState extends State<planspage> {
 
                       const SizedBox(height: 24),
                       _TermsSlider(
-                          currentStep: _sliding, goback: widget.goback),
+                        currentStep: _sliding,
+                        goback: widget.goback,
+                        gotoProposal: widget.gotoProposal,
+                      ),
 
                       const SizedBox(height: 20),
 
@@ -176,7 +180,11 @@ class _planspageState extends State<planspage> {
 class _TermsSlider extends StatefulWidget {
   final int currentStep;
   final bool goback;
-  const _TermsSlider({required this.currentStep, required this.goback});
+  final bool gotoProposal;
+  const _TermsSlider(
+      {required this.currentStep,
+      required this.goback,
+      required this.gotoProposal});
 
   @override
   State<_TermsSlider> createState() => __TermsSliderState();
@@ -197,7 +205,7 @@ class __TermsSliderState extends State<_TermsSlider> {
               index: index,
               currentStep: widget.currentStep,
               planData: samplePlans[index],
-              goback: widget.goback,
+              gotoProposal: widget.gotoProposal,
               sliding: _current,
             );
           },

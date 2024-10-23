@@ -10,7 +10,7 @@ import 'plan_details.dart';
 class PlanTile extends StatelessWidget {
   final int index;
   final int currentStep;
-  final bool goback;
+  final bool gotoProposal;
   final int sliding;
   final Map<String, dynamic> planData;
   const PlanTile(
@@ -18,7 +18,7 @@ class PlanTile extends StatelessWidget {
       required this.index,
       required this.planData,
       required this.currentStep,
-      required this.goback,
+      required this.gotoProposal,
       required this.sliding});
 
   @override
@@ -148,7 +148,8 @@ class PlanTile extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => PlanAddons(goback: goback)),
+                      builder: (context) =>
+                          PlanAddons(goback: true, gotoProposal: gotoProposal)),
                 );
               },
               text: 'Apply Now',
