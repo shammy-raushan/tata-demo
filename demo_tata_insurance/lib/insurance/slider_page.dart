@@ -160,6 +160,7 @@ class _planspageState extends State<planspage> {
                             TermSearchTextField(
                               onTap: () {},
                               labelText: "Search hospitals",
+                              onChanged: (String) {},
                             ),
                           ],
                         ),

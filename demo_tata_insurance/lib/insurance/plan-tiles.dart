@@ -23,6 +23,7 @@ class PlanTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String searchValue = '';
     return Container(
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
@@ -102,9 +103,15 @@ class PlanTile extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => PlanDetails(index: index),
+                    builder: (context) => PlanDetails(
+                      index: index,
+                      searchText: searchValue,
+                    ),
                   ),
                 );
+              },
+              onChanged: (value) {
+                searchValue = value;
               },
               labelText: 'Search within the policy',
               hintText: ""),
@@ -126,7 +133,7 @@ class PlanTile extends StatelessWidget {
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => PlanDetails(index: index),
+                builder: (context) => PlanDetails(index: index, searchText: '',),
               ),
             ),
             child: Text(
@@ -206,8 +213,13 @@ class TermSearchTextField extends StatelessWidget {
   final String? hintText;
   final String labelText;
   final GestureTapCallback onTap;
+  final Function(String) onChanged;
   const TermSearchTextField(
-      {super.key, required this.onTap, this.hintText, required this.labelText});
+      {super.key,
+      required this.onTap,
+      this.hintText,
+      required this.labelText,
+      required this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -216,7 +228,7 @@ class TermSearchTextField extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 20.0),
       padding: EdgeInsets.symmetric(horizontal: 12.0),
       child: TextFormField(
-        onChanged: null,
+        onChanged: onChanged,
         textInputAction: TextInputAction.done,
         onFieldSubmitted: (value) {
           if (value != "") onTap();
