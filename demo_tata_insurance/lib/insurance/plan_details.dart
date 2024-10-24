@@ -5,7 +5,7 @@ import '../utils/temp_values.dart';
 
 class PlanDetails extends StatefulWidget {
   final int index;
-  const PlanDetails({super.key, required this.index});
+  const PlanDetails({super.key, required this.index, required String searchText});
 
   @override
   State<PlanDetails> createState() => _PlanDetailsState();
